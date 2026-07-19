@@ -4,7 +4,7 @@ import Card from '../Card'
 export default function DownloadCv() {
     return (
         <>
-            <div className='absolute left-6 right-0 m-auto top-[11.8rem] ml-[4.5rem] sm:ml-[8rem] md:top-[13rem] md:ml-[8rem] lg:relative lg:m-0 lg:top-0 lg:ml-0 lg:mt-0'>
+            <div className='shrink-0'>
                 <Card>
                     <div className='w-full flex mt-1 justify-center items-center'>
                         <Link
