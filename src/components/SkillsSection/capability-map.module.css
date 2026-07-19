@@ -18,8 +18,8 @@
 
 .flowCanvas :global(.react-flow__pane) { cursor: default; }
 .flowCanvas :global(.react-flow__pane:active) { cursor: default; }
-.flowCanvas :global(.react-flow__node) { cursor: grab; }
-.flowCanvas :global(.react-flow__node:active) { cursor: grabbing; }
+.flowCanvas :global(.react-flow__node) { cursor: pointer; }
+.flowCanvas :global(.react-flow__node:active) { cursor: pointer; }
 .flowCanvas :global(.react-flow__node:focus-visible) { outline: none; }
 .flowCanvas :global(.react-flow__node:focus-visible) .flowNode { border-color: #c55e58; box-shadow: 0 0 0 1px rgba(197, 94, 88, .2); }
 .flowCanvas :global(.react-flow__edge.animated path) { animation-duration: 1.35s; }
