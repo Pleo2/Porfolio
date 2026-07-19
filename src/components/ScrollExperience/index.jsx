@@ -17,6 +17,7 @@ export default function ScrollExperience({children}) {
 
         media.add({
             desktop: '(min-width: 900px)',
+            mobile: '(max-width: 899px)',
             reduceMotion: '(prefers-reduced-motion: reduce)',
         }, context => {
             const {desktop, reduceMotion} = context.conditions
