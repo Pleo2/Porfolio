@@ -38,6 +38,8 @@ const edgeHandles = {
     Delivery: 'right-bottom',
 }
 
+const fitOptions = {padding: .1, minZoom: .68, maxZoom: 1, duration: 0}
+
 function CapabilityNode({data}) {
     if (data.kind === 'core') {
         return (
@@ -122,6 +124,8 @@ const createEdges = (skills, activeGroup) => skills.map(group => {
 
 export default function SkillsSection({skills}) {
     const root = useRef(null)
+    const flowCanvas = useRef(null)
+    const flowInstance = useRef(null)
     const cycleTimer = useRef(null)
     const [activeIndex, setActiveIndex] = useState(0)
     const [nodes, setNodes] = useNodesState(createNodes(skills))
@@ -131,10 +135,24 @@ export default function SkillsSection({skills}) {
 
     useEffect(() => {
         setNodes(currentNodes => currentNodes.map(node => {
-            if (node.id === 'core') return node
-            return {...node, data: {...node.data, active: node.id === activeGroup.group}}
+            const active = node.id !== 'core' && node.id === activeGroup.group
+            return {
+                ...node,
+                position: {...positions[node.id]},
+                data: node.id === 'core' ? node.data : {...node.data, active},
+            }
         }))
     }, [activeGroup.group, setNodes])
+
+    useEffect(() => {
+        if (!flowCanvas.current) return
+
+        const centerMap = () => flowInstance.current?.fitView(fitOptions)
+        const resizeObserver = new ResizeObserver(centerMap)
+        resizeObserver.observe(flowCanvas.current)
+
+        return () => resizeObserver.disconnect()
+    }, [])
 
     useGSAP(() => {
         const media = gsap.matchMedia()
@@ -230,11 +248,16 @@ export default function SkillsSection({skills}) {
         <article className='skills-section' ref={root}>
             <Title section='Capabilities' />
             <div className={style.system}>
-                <div className={style.flowCanvas} aria-label='Interactive capability graph'>
+                <div className={style.flowCanvas} ref={flowCanvas} aria-label='Interactive capability graph'>
                     <ReactFlow
+                        key='static-centered-capability-map'
                         nodes={nodes}
                         edges={edges}
                         nodeTypes={nodeTypes}
+                        onInit={instance => {
+                            flowInstance.current = instance
+                            requestAnimationFrame(() => instance.fitView(fitOptions))
+                        }}
                         onNodeClick={(_, node) => selectGroup(node.id)}
                         onNodeMouseEnter={(_, node) => selectGroup(node.id)}
                         nodesConnectable={false}
@@ -245,7 +268,7 @@ export default function SkillsSection({skills}) {
                         deleteKeyCode={null}
                         nodeExtent={[[20, 20], [710, 328]]}
                         fitView
-                        fitViewOptions={{padding: .1, minZoom: .68, maxZoom: 1}}
+                        fitViewOptions={fitOptions}
                         minZoom={.62}
                         maxZoom={1.15}
                         zoomOnScroll={false}
