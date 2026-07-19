@@ -2,14 +2,14 @@ export const projects = [
     {
         name: 'hacer-tier-list',
         description:
-        'It is a tier list maker, with a easy change of theme and excelent performanst, it is build with react-beautifuld-dnd and use vite like compailer',
+        'A tier list maker with easy theme changes and excellent performance, built with react-beautiful-dnd and Vite.',
         link: 'https://hacer-tier-list-vite.vercel.app/',
         img: '/hacerTierList.png'
     },
     {
-        name: 'gyphy-clone-api-test',
+        name: 'GIPHY clone',
         description:
-        'It is a clone of the official giphy page, feactures: optimization of the preview img in all sections, Mansory grid used in the official page. actually work in the mobile design.( only Desktop design ) ',
+        'A clone of the official GIPHY page featuring optimized preview images in all sections and the masonry grid used on the official page. Currently, only the desktop design is available.',
         link: 'https://gyphy-clone-api-test-eybqbk2wv-pleo2.vercel.app/',
         img: '/giphyclone.webp'
     },
@@ -22,7 +22,7 @@ export const projects = [
     {
         name: 'todo-Machine.dev',
         description:
-        'Focused on the design and user experience fast and pleasant, with the use of pure css in conjunction with the react library framer motion.',
+        'Focused on a fast, pleasant design and user experience, using pure CSS alongside the React animation library Framer Motion.',
         link: 'https://to-do-machine-ds6scmogi-pleo2.vercel.app/',
         img: '/todoMachino.webp'
     },

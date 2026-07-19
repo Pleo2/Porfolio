@@ -8,7 +8,7 @@ export const skills = [
         color: 'yellow-500',
     },
     {
-        skill: 'NextJs',
+        skill: 'Next.js',
         color: 'gray-500',
     },
     {
@@ -28,7 +28,7 @@ export const skills = [
         color: 'red-300',
     },
     {
-        skill: 'Css',
+        skill: 'CSS',
         color: 'blue-500',
     },
     {
@@ -36,7 +36,7 @@ export const skills = [
         color: 'pink-400',
     },
     {
-        skill: 'TailwnidCss',
+        skill: 'Tailwind CSS',
         color: 'teal-200',
     },
     {
@@ -52,7 +52,7 @@ export const skills = [
         color: 'zinc-900',
     },
     {
-        skill: 'Wsl',
+        skill: 'WSL',
         color: 'orange-300',
     },
 ]
