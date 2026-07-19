@@ -14,7 +14,7 @@ export default function AboutMe() {
             >
                 <Title section={'About Me'} />
                 {/* // remember this section exist the mobile and desktop version */}
-                <p className='text-zinc-400 font-sans mt-4 leading-8 md:text-xl md:leading-relaxed'>
+                <p className='mt-4 font-sans text-base leading-7 text-zinc-400 md:leading-8'>
                     I&apos;m a full-stack engineer and Co-Founder &amp; CTO at
                     Cobrix, building multi-tenant SaaS and payment infrastructure
                     for companies in Venezuela and LATAM. I design products

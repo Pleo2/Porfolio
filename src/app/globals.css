@@ -2,7 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { --font-mono: var(--font-jetbrains-mono), 'Courier New', monospace; }
+:root {
+  --font-serif: var(--font-newsreader), Georgia, serif;
+  --font-mono: var(--font-jetbrains-mono), 'Courier New', monospace;
+}
 
 body {
   margin: 0;
@@ -12,6 +15,7 @@ body {
     linear-gradient(90deg, rgba(255, 255, 255, .016) 1px, transparent 1px),
     #0a0a0c;
   background-size: 32px 32px;
+  font-family: var(--font-serif);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -27,8 +31,8 @@ body {
 .skills-section { position: relative; z-index: 10; padding-bottom: 1rem; }
 .capability-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin-top: 1.2rem; padding: 1px; background: #29292f; }
 .capability-group { min-width: 0; padding: 1.1rem; background: #0c0c0f; }
-.capability-group h3 { margin: 0 0 1.2rem; color: #d9d9de; font: 600 .76rem/1 var(--font-inter); }
-.capability-group ul { display: grid; gap: .52rem; margin: 0; padding: 0; color: #85858e; font: 400 clamp(.62rem, 2.4vw, .76rem)/1.35 var(--font-inter); list-style: none; }
+.capability-group h3 { margin: 0 0 1.2rem; color: #d9d9de; font: 600 .9rem/1 var(--font-serif); }
+.capability-group ul { display: grid; gap: .52rem; margin: 0; padding: 0; color: #85858e; font: 400 clamp(.72rem, 2.4vw, .86rem)/1.35 var(--font-serif); list-style: none; }
 .capability-group li::before { margin-right: .5rem; color: #c55e58; content: '·'; }
 
 .experience-list { margin-top: 1.2rem; border-top: 1px solid #29292f; }
@@ -38,6 +42,19 @@ body {
 .experience-copy { min-width: 0; }
 .experience-copy p { margin: .25rem 0 .65rem; color: #a1a1aa; font-size: .8rem; line-height: 1.65; }
 .experience-copy small { color: #64646d; font: 400 .58rem/1.5 var(--font-mono); letter-spacing: .025em; text-transform: uppercase; }
+
+.projects-section { margin-top: 5rem; }
+.project-list { margin-top: 1.4rem; border-top: 1px solid #29292f; }
+.project-case { display: grid; gap: 1.4rem; padding: 1.5rem 0; border-bottom: 1px solid #29292f; }
+.project-visual { position: relative; min-height: 13rem; overflow: hidden; border: 1px solid #29292f; background: #101014; }
+.project-visual img { object-fit: cover; object-position: top center; filter: saturate(.72) contrast(.96); transition: filter .45s ease, transform .65s cubic-bezier(.2,.8,.2,1); }
+.project-content { display: flex; flex-direction: column; justify-content: center; min-width: 0; }
+.project-meta { display: flex; justify-content: space-between; margin-bottom: 1.35rem; color: #696972; font: 500 .58rem/1 var(--font-mono); letter-spacing: .045em; text-transform: uppercase; }
+.project-meta span:last-child { color: #a65d58; }
+.project-content h3 { margin: 0; color: #dedee2; font: 600 clamp(1.8rem, 6vw, 3rem)/.95 var(--font-calSans); letter-spacing: -.04em; }
+.project-content > p { max-width: 36rem; margin: 1rem 0 0; color: #96969f; font-size: 1rem; line-height: 1.65; }
+.project-case:hover .project-visual img { filter: saturate(.95) contrast(1); transform: scale(1.018); }
+.project-case:hover .project-content h3 { color: #fff; }
 
 .download-cv { display: inline-flex; align-items: center; justify-content: space-between; width: 13rem; min-height: 3.35rem; padding: 0 1rem; color: #d7d7dc; border: 1px solid #3a3a41; border-radius: 2px; background: rgba(10, 10, 12, .72); font: 500 .68rem/1 var(--font-mono); letter-spacing: .055em; text-transform: uppercase; transition: color .2s ease, border-color .2s ease, background .2s ease; }
 .download-cv:hover { color: #fff; border-color: #c55e58; background: #101014; }
@@ -58,6 +75,8 @@ body {
   .experience-item time { grid-column: 2; grid-row: 1; margin-top: .05rem; }
   .experience-copy { grid-column: 3; }
   .experience-copy p { margin-top: 0; }
+  .project-case { grid-template-columns: minmax(0, 1.15fr) minmax(15rem, .85fr); align-items: stretch; gap: 2.2rem; padding: 2rem 0; }
+  .project-visual { min-height: 20rem; }
   .site-footer-inner { grid-template-columns: 1fr auto auto; align-items: start; }
   .site-footer-meta { margin-top: 0; text-align: right; }
 }

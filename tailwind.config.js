@@ -15,7 +15,7 @@ export const theme = {
         'radial-gradient(50% 50% at 50% 50%, var(--tw-gradient-stops))',
     },
     fontFamily: {
-      sans: ['var(--font-inter)', ..._fontFamily.sans],
+      sans: ['var(--font-newsreader)', ..._fontFamily.serif],
       display: ['var(--font-calSans)'],
       mono: ['var(--font-jetbrains-mono)', ..._fontFamily.mono],
     },

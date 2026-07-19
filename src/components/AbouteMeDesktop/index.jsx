@@ -9,7 +9,7 @@ export default function AbouteMeDesktop() {
             animate={{opacity: 1}}
             transition={{duration: 0.3}}
         >
-            <p className='hidden lg:flex lg:mt-8 lg:text-zinc-400 lg:font-sans lg:text-xl lg:leading-loose'>
+            <p className='hidden lg:mt-8 lg:flex lg:font-sans lg:text-base lg:leading-8 lg:text-zinc-400'>
                 I&apos;m a full-stack engineer and Co-Founder &amp; CTO at Cobrix,
                 building multi-tenant SaaS and payment infrastructure for
                 companies in Venezuela and LATAM. I design products end-to-end
