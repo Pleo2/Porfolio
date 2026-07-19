@@ -2,7 +2,12 @@ import Image from "next/image"
 
 export default function Article({ project }) {
     return (
-        <a target='_blank' rel='noreferrer' href={`${project.link}`}>
+        <a
+            target='_blank'
+            rel='noopener noreferrer'
+            href={`${project.link}`}
+            aria-label={`Open ${project.name} project`}
+        >
             <article className='p-4 md:p-8'>
                 <h2 className='z-50 text-2xl text-zinc-200 font-medium duration-500 sm:text-zinc-200 md:text-4xl lg:text-4xl group-hover:text-white font-display'>
                     {project.name}
@@ -15,7 +20,7 @@ export default function Article({ project }) {
                     src={project.img}
                     width={350}
                     height={200}
-                    alt="Picture of the author"
+                    alt={`${project.name} project preview`}
                 >
                 </Image>
             </article>

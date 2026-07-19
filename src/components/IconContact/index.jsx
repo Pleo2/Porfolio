@@ -8,7 +8,8 @@ export default function IconContact() {
             <a
                 href='https://github.com/Pleo2'
                 target='_blank'
-                rel='noreferrer'
+                rel='noopener noreferrer'
+                aria-label='GitHub profile'
                 className={`w-[30px] h-[30px] [&>svg]:fill-gray-300 `}
             >
                 <Githublogo />
@@ -17,7 +18,8 @@ export default function IconContact() {
             <a
                 href='https://twitter.com/leotwit14'
                 target='_blank'
-                rel='noreferrer'
+                rel='noopener noreferrer'
+                aria-label='Twitter profile'
                 className={`w-[30px] h-[30px] [&>svg]:fill-gray-300 `}
             >
                 <Twitterlogo />
@@ -25,7 +27,8 @@ export default function IconContact() {
             <a
                 href='https://www.linkedin.com/in/pleo2/'
                 target='_blank'
-                rel='noreferrer'
+                rel='noopener noreferrer'
+                aria-label='LinkedIn profile'
                 className={`w-[30px] h-[30px] [&>svg]:fill-gray-300 `}
             >
                 <Linkedinlogo />

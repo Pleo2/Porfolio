@@ -14,7 +14,13 @@ export default function SectionCvDesktop() {
                 className='absolute top-0 left-24 md:top-12 md:left-[22rem] lg:flex lg:m-auto lg:justify-center lg:gap-8 lg:mt-[32rem] xl:left-1/2 xl:-translate-x-1/2 xl:item-center'
             >
                 <DownloadCv />
-                <a className='hidden sm:hidden md:hidden lg:flex lg:items-center w-40px h-40px' href='https://github.com/Pleo2'>
+                <a
+                    className='hidden sm:hidden md:hidden lg:flex lg:items-center w-40px h-40px'
+                    href='https://github.com/Pleo2'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    aria-label='GitHub profile'
+                >
                     <Githublogo width='40px' height='40px' fill='white' />
                 </a>
             </motion.div>
