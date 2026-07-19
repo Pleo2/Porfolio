@@ -1,18 +1,12 @@
 import './globals.css'
 import Header from '@/components/Header/Header'
-import {JetBrains_Mono as JetBrainsMono, Newsreader} from 'next/font/google'
+import {JetBrains_Mono as JetBrainsMono} from 'next/font/google'
 import localFont from 'next/font/local'
 import {SpeedInsights} from '@vercel/speed-insights/next'
 import Particles from '@/components/Particles'
 import Slider from '@/components/Slider'
 import SiteFooter from '@/components/SiteFooter'
 
-const newsreader = Newsreader({
-    subsets: ['latin'],
-    weight: ['400', '500', '600'],
-    variable: '--font-newsreader',
-    display: 'swap',
-})
 const calSans = localFont({
     src: '../../public/CalSans-SemiBold.woff2',
     variable: '--font-calSans',
@@ -30,7 +24,7 @@ export const metadata = {
 
 export default function RootLayout({children}) {
     return (
-        <html lang='en' className={`${calSans.variable} ${newsreader.variable} ${jetBrainsMono.variable}`}>
+        <html lang='en' className={`${calSans.variable} ${jetBrainsMono.variable}`}>
             <head>
                 <link rel='icon' href='/icon.svg' />
             </head>

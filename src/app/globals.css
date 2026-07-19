@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --font-serif: var(--font-newsreader), Georgia, serif;
+  --font-sans: var(--font-calSans), Arial, sans-serif;
   --font-mono: var(--font-jetbrains-mono), 'Courier New', monospace;
 }
 
@@ -15,7 +15,7 @@ body {
     linear-gradient(90deg, rgba(255, 255, 255, .016) 1px, transparent 1px),
     #0a0a0c;
   background-size: 32px 32px;
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -31,8 +31,8 @@ body {
 .skills-section { position: relative; z-index: 10; padding-bottom: 1rem; }
 .capability-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin-top: 1.2rem; padding: 1px; background: #29292f; }
 .capability-group { min-width: 0; padding: 1.1rem; background: #0c0c0f; }
-.capability-group h3 { margin: 0 0 1.2rem; color: #d9d9de; font: 600 .9rem/1 var(--font-serif); }
-.capability-group ul { display: grid; gap: .52rem; margin: 0; padding: 0; color: #85858e; font: 400 clamp(.72rem, 2.4vw, .86rem)/1.35 var(--font-serif); list-style: none; }
+.capability-group h3 { margin: 0 0 1.2rem; color: #d9d9de; font: 600 .9rem/1 var(--font-sans); }
+.capability-group ul { display: grid; gap: .52rem; margin: 0; padding: 0; color: #85858e; font: 400 clamp(.72rem, 2.4vw, .86rem)/1.35 var(--font-sans); list-style: none; }
 .capability-group li::before { margin-right: .5rem; color: #c55e58; content: '·'; }
 
 .experience-list { margin-top: 1.2rem; border-top: 1px solid #29292f; }
