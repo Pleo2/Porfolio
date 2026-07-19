@@ -16,18 +16,11 @@ body {
 ::selection { color: #0a0a0c; background: #c55e58; }
 
 .section-heading {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: .8rem;
-  align-items: end;
   margin-top: 3.5rem;
-  padding-bottom: .9rem;
-  border-bottom: 1px solid #29292f;
+  padding-bottom: .35rem;
 }
 
 .section-heading h2 { margin: 0; color: #dedee2; font: 600 clamp(2rem, 7vw, 3rem)/.95 var(--font-calSans); letter-spacing: -.045em; }
-.section-heading > span { padding-bottom: .16rem; color: #5f5f67; font: 500 .58rem/1 monospace; letter-spacing: .08em; }
-.section-heading > span:first-child { color: #c55e58; }
 
 .skills-section { position: relative; z-index: 10; padding-bottom: 1rem; }
 .skills-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin: 1.2rem 0 0; padding: 1px; background: #29292f; list-style: none; }

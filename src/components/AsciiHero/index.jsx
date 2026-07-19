@@ -28,7 +28,7 @@ export default function AsciiHero() {
 
         if (reducedMotion) {
             animatedCharacters.forEach(character => { character.textContent = character.dataset.character })
-            gsap.set(['[data-ascii-char]', '[data-ascii-meta]'], {autoAlpha: 1, y: 0})
+            gsap.set('[data-ascii-char]', {autoAlpha: 1, y: 0})
             return
         }
 
@@ -36,7 +36,6 @@ export default function AsciiHero() {
             character.textContent = glyphs[Math.floor(Math.random() * glyphs.length)]
         })
         gsap.set(animatedCharacters, {autoAlpha: 0, y: 12})
-        gsap.set('[data-ascii-meta]', {autoAlpha: 0, y: 10})
 
         const intro = gsap.timeline({defaults: {ease: 'power3.out'}})
         animatedCharacters.forEach((character, index) => {
@@ -47,8 +46,6 @@ export default function AsciiHero() {
                 onStart: () => { character.textContent = character.dataset.character },
             }, Math.min(index * 0.006, 0.72) + Math.random() * 0.14)
         })
-        intro.to('[data-ascii-meta]', {autoAlpha: 1, y: 0, duration: 0.6, stagger: 0.08}, '-=0.2')
-
         const signal = gsap.timeline({repeat: -1, repeatDelay: 3.2})
         signal.to('[data-ascii-ghost]', {autoAlpha: 0.28, x: 5, duration: 0.055, ease: 'none'})
             .to('[data-ascii-ghost]', {autoAlpha: 0, x: -3, duration: 0.08, ease: 'none'})
@@ -64,7 +61,6 @@ export default function AsciiHero() {
 
     return (
         <div className={style.hero} ref={root}>
-            <div className={style.meta} data-ascii-meta><span>[ IDENTITY: PLEO2 ]</span><span>FRONTEND / SYSTEMS</span></div>
             <h1 className='sr-only'>Pleo2</h1>
             <div className={style.artFrame}>
                 <pre className={style.ghost} data-ascii-ghost aria-hidden='true'>{asciiLines.join('\n')}</pre>
@@ -79,7 +75,6 @@ export default function AsciiHero() {
                     ))}
                 </pre>
             </div>
-            <div className={style.meta} data-ascii-meta><span>ASSEMBLED WITH INTENT</span><span>VZLA / REMOTE</span></div>
         </div>
     )
 }
