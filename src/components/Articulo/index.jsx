@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 export default function Article({project}) {
     return (
-        <a className='project-case' target='_blank' rel='noopener noreferrer' href={project.link} aria-label={`Open ${project.name} project`}>
+        <a className='project-case' data-scroll-project target='_blank' rel='noopener noreferrer' href={project.link} aria-label={`Open ${project.name} project`}>
             <div className='project-visual'>
                 <Image src={project.img} fill sizes='(max-width: 767px) 100vw, 55vw' alt={`${project.name} project preview`} />
             </div>

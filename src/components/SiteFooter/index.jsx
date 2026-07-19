@@ -1,7 +1,7 @@
 export default function SiteFooter() {
     return (
         <footer className='site-footer'>
-            <div className='site-footer-inner'>
+            <div className='site-footer-inner' data-scroll-reveal>
                 <div>
                     <strong>José Moreno / Pleo2</strong>
                     <p>Full-Stack Engineer · Co-Founder &amp; CTO</p>

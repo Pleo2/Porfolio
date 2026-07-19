@@ -7,6 +7,14 @@
   --font-mono: var(--font-jetbrains-mono), 'Courier New', monospace;
 }
 
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar { display: none; width: 0; height: 0; }
+
 body {
   margin: 0;
   color: #d7d7dc;
@@ -21,6 +29,21 @@ body {
 }
 
 ::selection { color: #0a0a0c; background: #c55e58; }
+
+.scroll-experience { min-height: 100vh; }
+.ios-scroll-thumb {
+  position: fixed;
+  top: 0;
+  right: 3px;
+  z-index: 1000;
+  width: 4px;
+  border-radius: 999px;
+  background: rgba(215, 215, 220, .72);
+  box-shadow: 0 0 0 1px rgba(10, 10, 12, .18);
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
 
 .section-heading {
   margin-top: 3.5rem;

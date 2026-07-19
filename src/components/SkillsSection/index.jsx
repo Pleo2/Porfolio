@@ -1,13 +1,10 @@
-'use client'
-
-import {motion} from 'framer-motion'
 import Title from '../Title'
 
 export default function SkillsSection({skills}) {
     return (
-        <motion.article className='skills-section' initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.3}}>
+        <article className='skills-section'>
             <Title section='Capabilities' />
-            <div className='capability-grid'>
+            <div className='capability-grid' data-scroll-reveal>
                 {skills.map(group => (
                     <section className='capability-group' key={group.group}>
                         <h3>{group.group}</h3>
@@ -17,6 +14,6 @@ export default function SkillsSection({skills}) {
                     </section>
                 ))}
             </div>
-        </motion.article>
+        </article>
     )
 }

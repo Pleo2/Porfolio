@@ -6,6 +6,7 @@ import {SpeedInsights} from '@vercel/speed-insights/next'
 import Particles from '@/components/Particles'
 import Slider from '@/components/Slider'
 import SiteFooter from '@/components/SiteFooter'
+import ScrollExperience from '@/components/ScrollExperience'
 
 const jetBrainsMono = JetBrainsMono({
     subsets: ['latin'],
@@ -27,13 +28,15 @@ export default function RootLayout({children}) {
             <body>
                 <Header />
                 <Particles />
-                <main className='relative z-10 flex h-max flex-col overflow-x-hidden'>
-                    <Slider />
-                    <section className='flex flex-col justify-center w-[310px] m-auto md:w-[600px] lg:w-[900px]'>
-                        {children}
-                    </section>
-                </main>
-                <SiteFooter />
+                <ScrollExperience>
+                    <main className='relative z-10 flex h-max flex-col overflow-x-hidden'>
+                        <Slider />
+                        <section className='flex flex-col justify-center w-[310px] m-auto md:w-[600px] lg:w-[900px]'>
+                            {children}
+                        </section>
+                    </main>
+                    <SiteFooter />
+                </ScrollExperience>
                 <SpeedInsights />
             </body>
         </html>
