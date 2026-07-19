@@ -9,16 +9,14 @@ export default function AbouteMeDesktop() {
             animate={{opacity: 1}}
             transition={{duration: 0.3}}
         >
-            <p className='hidden lg:flex lg:mt-8 lg:text-zinc-400 lg:font-sans lg:text-xl lg:leading-loose'>
-                More than 3 years transforming ideas into digital solutions,
-                software developer with a deep enthusiasm for the IT world.
-                My experience covers full-stack web
-                development in React, Node.js, creating high
-                quality web applications, design and performance. allowing me to
-                bring your ideas to the palm of my hand. In the last months I
-                have been dedicated to to the implementation of AI related
-                services such as Microsoft Azure AI, GoApi, Mid Journey, Clip
-                Drop, ChatGpt, Elevenlabs, EdenAI, etc..          
+            <p className='hidden lg:mt-8 lg:flex lg:font-sans lg:text-base lg:leading-8 lg:text-zinc-400' data-scroll-reveal>
+                I&apos;m a full-stack engineer and Co-Founder &amp; CTO at Cobrix,
+                building multi-tenant SaaS and payment infrastructure for
+                companies in Venezuela and LATAM. I design products end-to-end
+                with Next.js, NestJS, PostgreSQL, Redis and Docker, balancing
+                security, performance, usability and maintainable architecture.
+                My experience also spans E-commerce, Flutter applications,
+                cloud infrastructure and applied AI integrations.
             </p>
         </motion.div>
     )

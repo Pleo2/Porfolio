@@ -14,16 +14,15 @@ export default function AboutMe() {
             >
                 <Title section={'About Me'} />
                 {/* // remember this section exist the mobile and desktop version */}
-                <p className='text-zinc-400 font-sans mt-4 leading-8 md:text-xl md:leading-relaxed'>
-                    More than 3 years transforming ideas into digital solutions,
-                    software developer with a deep enthusiasm for the IT world.
-                    My experience covers full-stack web development in React,
-                    Node.js, creating high quality web applications, design and
-                    performance. allowing me to bring your ideas to the palm of
-                    my hand. In the last months I have been dedicated to to the
-                    implementation of AI related services such as Microsoft
-                    Azure AI, GoApi, Mid Journey, Clip Drop, ChatGpt,
-                    Elevenlabs, EdenAI, etc..
+                <p className='mt-4 font-sans text-base leading-7 text-zinc-400 md:leading-8' data-scroll-reveal>
+                    I&apos;m a full-stack engineer and Co-Founder &amp; CTO at
+                    Cobrix, building multi-tenant SaaS and payment infrastructure
+                    for companies in Venezuela and LATAM. I design products
+                    end-to-end with Next.js, NestJS, PostgreSQL, Redis and
+                    Docker, with a strong focus on security, performance and
+                    maintainable architecture. My background also spans
+                    E-commerce, Flutter applications, cloud infrastructure and
+                    applied AI integrations.
                 </p>
             </motion.div>
         </>

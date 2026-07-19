@@ -1,41 +1,42 @@
 import './globals.css'
 import Header from '@/components/Header/Header'
-import {Inter} from 'next/font/google'
-import localFont from 'next/font/local'
+import {JetBrains_Mono as JetBrainsMono} from 'next/font/google'
+import {CalSansUI} from '@calcom/cal-sans-ui/ui'
 import {SpeedInsights} from '@vercel/speed-insights/next'
 import Particles from '@/components/Particles'
 import Slider from '@/components/Slider'
+import SiteFooter from '@/components/SiteFooter'
+import ScrollExperience from '@/components/ScrollExperience'
 
-const inter = Inter({
+const jetBrainsMono = JetBrainsMono({
     subsets: ['latin'],
-    weight: ['400'],
-    variable: '--font-inter',
-})
-const calSans = localFont({
-    src: '../../public/CalSans-SemiBold.woff2',
-    variable: '--font-calSans',
+    variable: '--font-jetbrains-mono',
+    display: 'swap',
 })
 
 export const metadata = {
-    title: 'Pleo2 Portfolio',
-    description: 'My personal Portfolio Web developer',
+    title: 'José Moreno — Full-Stack Engineer & CTO',
+    description: 'Full-stack engineer building secure, scalable SaaS, payment and E-commerce products with Next.js, NestJS and modern cloud infrastructure.',
 }
 
 export default function RootLayout({children}) {
     return (
-        <html lang='en' className={`${calSans.variable} ${inter.variable}`}>
+        <html lang='en' className={`${CalSansUI.variable} ${jetBrainsMono.variable}`}>
             <head>
                 <link rel='icon' href='/icon.svg' />
             </head>
             <body>
-                <Header />
                 <Particles />
-                <main className={`flex h-max flex-col overflow-x-hidden`}>
-                    <Slider />
-                    <section className='flex flex-col justify-center w-[310px] m-auto md:w-[600px] lg:w-[900px]'>
-                        {children}
-                    </section>
-                </main>
+                <ScrollExperience>
+                    <Header />
+                    <main className='relative z-10 flex h-max flex-col overflow-x-hidden'>
+                        <Slider />
+                        <section className='portfolio-content'>
+                            {children}
+                        </section>
+                    </main>
+                    <SiteFooter />
+                </ScrollExperience>
                 <SpeedInsights />
             </body>
         </html>

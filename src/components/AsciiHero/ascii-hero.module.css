@@ -1,0 +1,40 @@
+.hero {
+  width: min(calc(100% - 1.5rem), 960px);
+  margin: 0 auto;
+  color: #e7e7e9;
+}
+
+.artFrame {
+  display: grid;
+  position: relative;
+  min-height: clamp(9rem, 22vw, 13rem);
+  place-items: center;
+  overflow: hidden;
+  background: transparent;
+}
+
+.art {
+  grid-area: 1 / 1;
+  margin: 0;
+  white-space: pre;
+  font-family: Consolas, 'Lucida Console', 'Courier New', monospace;
+  font-size: clamp(.3rem, 1.35vw, .82rem);
+  font-variant-ligatures: none;
+  font-weight: 700;
+  line-height: 1.12;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.art { position: relative; z-index: 2; text-shadow: 0 0 22px rgba(255, 255, 255, .06); }
+.line { display: inline; }
+.art [data-ascii-char] { display: inline-block; width: 1ch; will-change: transform, opacity; }
+
+@media (min-width: 768px) {
+  .hero { margin-top: 0; }
+  .art { font-size: clamp(.7rem, 1.35vw, .92rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .art [data-ascii-char] { opacity: 1; transform: none; }
+}
