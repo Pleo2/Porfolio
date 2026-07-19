@@ -10,11 +10,10 @@
   min-height: clamp(9rem, 22vw, 13rem);
   place-items: center;
   overflow: hidden;
-  background: radial-gradient(circle at 50% 50%, rgba(197, 94, 88, .06), transparent 55%);
+  background: transparent;
 }
 
-.art,
-.ghost {
+.art {
   grid-area: 1 / 1;
   margin: 0;
   white-space: pre;
@@ -28,16 +27,14 @@
 }
 
 .art { position: relative; z-index: 2; text-shadow: 0 0 22px rgba(255, 255, 255, .06); }
-.ghost { z-index: 1; color: #c55e58; opacity: 0; pointer-events: none; will-change: transform, opacity; }
 .line { display: inline; }
 .art [data-ascii-char] { display: inline-block; width: 1ch; will-change: transform, opacity; }
 
 @media (min-width: 768px) {
   .hero { margin-top: 0; }
-  .art, .ghost { font-size: clamp(.7rem, 1.35vw, .92rem); }
+  .art { font-size: clamp(.7rem, 1.35vw, .92rem); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .art [data-ascii-char], .ghost { opacity: 1; transform: none; }
-  .ghost { display: none; }
+  .art [data-ascii-char] { opacity: 1; transform: none; }
 }

@@ -46,15 +46,8 @@ export default function AsciiHero() {
                 onStart: () => { character.textContent = character.dataset.character },
             }, Math.min(index * 0.006, 0.72) + Math.random() * 0.14)
         })
-        const signal = gsap.timeline({repeat: -1, repeatDelay: 3.2})
-        signal.to('[data-ascii-ghost]', {autoAlpha: 0.28, x: 5, duration: 0.055, ease: 'none'})
-            .to('[data-ascii-ghost]', {autoAlpha: 0, x: -3, duration: 0.08, ease: 'none'})
-            .to('[data-ascii-art]', {x: -1.5, duration: 0.045, ease: 'none'}, '<')
-            .to('[data-ascii-art]', {x: 0, duration: 0.07, ease: 'none'})
-
         return () => {
             intro.kill()
-            signal.kill()
             animatedCharacters.forEach(character => { character.textContent = character.dataset.character })
         }
     }, {scope: root})
@@ -63,8 +56,7 @@ export default function AsciiHero() {
         <div className={style.hero} ref={root}>
             <h1 className='sr-only'>Pleo2</h1>
             <div className={style.artFrame}>
-                <pre className={style.ghost} data-ascii-ghost aria-hidden='true'>{asciiLines.join('\n')}</pre>
-                <pre className={style.art} data-ascii-art aria-hidden='true'>
+                <pre className={style.art} aria-hidden='true'>
                     {asciiLines.map((line, lineIndex) => (
                         <span className={style.line} key={`line-${lineIndex}`}>
                             {[...line].map((character, characterIndex) => (

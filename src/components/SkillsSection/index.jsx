@@ -21,25 +21,11 @@ const connection = ([x, y]) => {
     return `M 450 220 C ${450 + (direction * 115)} 220, ${x - (direction * 95)} ${y}, ${x} ${y}`
 }
 
-const buildSkillNodes = items => items.map((label, index) => {
-    const angle = (-Math.PI / 2) + ((Math.PI * 2 * index) / items.length)
-    const x = 50 + (Math.cos(angle) * 28)
-    const y = 50 + (Math.sin(angle) * 36)
-
-    return {
-        label,
-        x,
-        y,
-        point: [x * 9, y * 4.4],
-    }
-})
-
 export default function SkillsSection({skills}) {
     const root = useRef(null)
     const [activeIndex, setActiveIndex] = useState(0)
     const activeGroup = skills[activeIndex]
     const activeMeta = mapNodes[activeIndex]
-    const activeSkillNodes = buildSkillNodes(activeGroup.items)
 
     useGSAP(() => {
         const media = gsap.matchMedia()
@@ -81,7 +67,6 @@ export default function SkillsSection({skills}) {
                 scale: 1,
                 duration: .55,
                 stagger: .08,
-                clearProps: 'transform',
             }, .3).fromTo('[data-map-detail]', {
                 autoAlpha: 0,
                 y: 12,
@@ -91,6 +76,17 @@ export default function SkillsSection({skills}) {
                 duration: .6,
                 clearProps: 'transform,opacity,visibility',
             }, .5)
+
+            gsap.to('[data-map-node]', {
+                x: index => index % 2 === 0 ? 4 : -4,
+                y: index => index < 2 ? -5 : 5,
+                duration: index => 3.8 + (index * .35),
+                delay: 1.25,
+                ease: 'sine.inOut',
+                repeat: -1,
+                yoyo: true,
+                stagger: .16,
+            })
         })
 
         return () => media.revert()
@@ -109,31 +105,6 @@ export default function SkillsSection({skills}) {
                 duration: 2.4,
                 ease: 'none',
                 repeat: -1,
-            })
-
-            const skillEdges = gsap.utils.toArray('[data-skill-edge]')
-            skillEdges.forEach(edge => {
-                const length = edge.getTotalLength()
-                gsap.fromTo(edge, {
-                    strokeDasharray: length,
-                    strokeDashoffset: length,
-                }, {
-                    strokeDashoffset: 0,
-                    duration: .55,
-                    ease: 'power2.out',
-                })
-            })
-
-            gsap.fromTo('[data-skill-node]', {
-                autoAlpha: 0,
-                scale: .82,
-            }, {
-                autoAlpha: 1,
-                scale: 1,
-                duration: .45,
-                stagger: .045,
-                ease: 'power3.out',
-                clearProps: 'transform,opacity,visibility',
             })
 
             gsap.fromTo('[data-map-skill]', {
@@ -164,14 +135,6 @@ export default function SkillsSection({skills}) {
                                 <path className={`${style.signalPath} ${index === activeIndex ? style.signalPathActive : ''}`} data-map-signal d={connection(node.point)} />
                             </g>
                         ))}
-                        {activeSkillNodes.map(node => (
-                            <path
-                                className={style.skillPath}
-                                data-skill-edge
-                                d={`M 450 220 L ${node.point[0]} ${node.point[1]}`}
-                                key={`${activeGroup.group}-${node.label}`}
-                            />
-                        ))}
                     </svg>
 
                     <div className={style.core} data-map-core>
@@ -193,21 +156,9 @@ export default function SkillsSection({skills}) {
                         >
                             <span>{group.group}</span>
                             <small>{mapNodes[index].description}</small>
+                            <em>{index === activeIndex ? 'Active' : 'Explore'}</em>
                         </button>
                     ))}
-
-                    <div className={style.skillOrbit} key={activeGroup.group} aria-hidden='true'>
-                        {activeSkillNodes.map(node => (
-                            <span
-                                className={style.skillNode}
-                                data-skill-node
-                                key={node.label}
-                                style={{'--skill-x': `${node.x}%`, '--skill-y': `${node.y}%`}}
-                            >
-                                {node.label}
-                            </span>
-                        ))}
-                    </div>
                 </div>
 
                 <div className={style.detail} data-map-detail aria-live='polite'>
