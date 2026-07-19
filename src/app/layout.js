@@ -17,8 +17,8 @@ const calSans = localFont({
 })
 
 export const metadata = {
-    title: 'Pleo2 Portfolio',
-    description: 'My personal Portfolio Web developer',
+    title: 'José Moreno — Full-Stack Engineer & CTO',
+    description: 'Full-stack engineer building secure, scalable SaaS, payment and E-commerce products with Next.js, NestJS and modern cloud infrastructure.',
 }
 
 export default function RootLayout({children}) {

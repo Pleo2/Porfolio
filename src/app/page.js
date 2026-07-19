@@ -1,10 +1,12 @@
 import AboutMeSection from '@/components/AboutMeSection'
 import ProjectsSection from '@/components/ProjectsSection'
 import SkillsSection from '@/components/SkillsSection'
+import ExperienceSection from '@/components/ExperienceSection'
 import SectionCvDesktop from '@/components/section-Cv-desktop'
 import LinkSocialIcons from '@/components/LinkSocialIcons'
 import {projects} from '@/mock/projects'
 import {skills} from '@/mock/skills'
+import {experience} from '@/mock/experience'
 import AbouteMeDesktop from '../components/AbouteMeDesktop'
 
 export default function Home() {
@@ -14,6 +16,7 @@ export default function Home() {
             <AboutMeSection />
             <AbouteMeDesktop />
             <LinkSocialIcons />
+            <ExperienceSection experience={experience} />
             <ProjectsSection projects={projects} />
             <SkillsSection skills={skills} />
         </>

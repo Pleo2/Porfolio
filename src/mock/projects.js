@@ -1,21 +1,21 @@
 export const projects = [
     {
-        name: 'hacer-tier-list',
+        name: 'Hacer Tier List',
         description:
-        'A tier list maker with easy theme changes and excellent performance, built with react-beautiful-dnd and Vite.',
+        'A fast, customizable tier-list builder focused on direct manipulation, responsive feedback and a frictionless editing flow.',
         link: 'https://hacer-tier-list-vite.vercel.app/',
         img: '/hacerTierList.png'
     },
     {
         name: 'GIPHY clone',
         description:
-        'A clone of the official GIPHY page featuring optimized preview images in all sections and the masonry grid used on the official page. Currently, only the desktop design is available.',
+        'An exploration of high-density media interfaces with optimized previews, API-driven discovery and a masonry composition inspired by GIPHY.',
         link: 'https://gyphy-clone-api-test-eybqbk2wv-pleo2.vercel.app/',
         img: '/giphyclone.webp'
     },
     {
-        name: 'poke-force-graph',
-        description: 'Poke Force Graph is a web application that displays a strength graph of Pokémon from the first generation.', 
+        name: 'Poké Force Graph',
+        description: 'An interactive 2D and 3D data visualization mapping relationships and relative strength across first-generation Pokémon.',
         link: 'https://poke-force-graph-astro-react-type-script.vercel.app/', 
         img: '/pokegraph3d&2d.png'
     },

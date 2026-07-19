@@ -1,58 +1,18 @@
 export const skills = [
     {
-        skill: 'React',
-        color: 'cyan-600',
+        group: 'Frontend',
+        items: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Three.js', 'Accessibility'],
     },
     {
-        skill: 'JavaScript',
-        color: 'yellow-500',
+        group: 'Backend',
+        items: ['Node.js', 'NestJS', 'Fastify', 'REST APIs', 'PostgreSQL', 'Prisma', 'Redis'],
     },
     {
-        skill: 'Next.js',
-        color: 'gray-500',
+        group: 'Architecture',
+        items: ['Clean Architecture', 'DDD', 'Microservices', 'Multi-tenant SaaS', 'RBAC', 'Webhooks'],
     },
     {
-        skill: 'TypeScript(Basic)',
-        color: 'blue-400',
-    },
-    {
-        skill: 'Git',
-        color: 'orange-400',
-    },
-    {
-        skill: 'GitHub',
-        color: 'zinc-700',
-    },
-    {
-        skill: 'HTML',
-        color: 'red-300',
-    },
-    {
-        skill: 'CSS',
-        color: 'blue-500',
-    },
-    {
-        skill: 'Sass',
-        color: 'pink-400',
-    },
-    {
-        skill: 'Tailwind CSS',
-        color: 'teal-200',
-    },
-    {
-        skill: 'Jest',
-        color: 'pink-300',
-    },
-    {
-        skill: 'TestingLibrary',
-        color: 'red-600',
-    },
-    {
-        skill: 'Linux',
-        color: 'zinc-900',
-    },
-    {
-        skill: 'WSL',
-        color: 'orange-300',
+        group: 'Delivery',
+        items: ['Docker', 'GitHub Actions', 'Railway', 'AWS / R2', 'Vitest', 'Performance', 'Technical SEO'],
     },
 ]

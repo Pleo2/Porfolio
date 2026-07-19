@@ -10,14 +10,13 @@ export default function AbouteMeDesktop() {
             transition={{duration: 0.3}}
         >
             <p className='hidden lg:flex lg:mt-8 lg:text-zinc-400 lg:font-sans lg:text-xl lg:leading-loose'>
-                With more than three years of experience transforming ideas
-                into digital solutions, I am a software developer with a deep
-                enthusiasm for the IT world. My experience covers full-stack
-                web development with React and Node.js, creating high-quality
-                web applications focused on design and performance. In recent
-                months, I have focused on implementing AI-related services such
-                as Microsoft Azure AI, GoAPI, Midjourney, Clipdrop, ChatGPT,
-                ElevenLabs, and Eden AI.
+                I&apos;m a full-stack engineer and Co-Founder &amp; CTO at Cobrix,
+                building multi-tenant SaaS and payment infrastructure for
+                companies in Venezuela and LATAM. I design products end-to-end
+                with Next.js, NestJS, PostgreSQL, Redis and Docker, balancing
+                security, performance, usability and maintainable architecture.
+                My experience also spans E-commerce, Flutter applications,
+                cloud infrastructure and applied AI integrations.
             </p>
         </motion.div>
     )
