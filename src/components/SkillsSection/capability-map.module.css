@@ -99,7 +99,7 @@
   background: rgba(12, 12, 15, .94);
   text-align: left;
   cursor: pointer;
-  opacity: .54;
+  opacity: .46;
   transition: color .25s ease, border-color .25s ease, background .25s ease, box-shadow .25s ease, opacity .25s ease;
 }
 

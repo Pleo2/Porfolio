@@ -23,6 +23,7 @@ const connection = ([x, y]) => {
 
 export default function SkillsSection({skills}) {
     const root = useRef(null)
+    const cycleTimer = useRef(null)
     const [activeIndex, setActiveIndex] = useState(0)
     const activeGroup = skills[activeIndex]
     const activeMeta = mapNodes[activeIndex]
@@ -32,6 +33,7 @@ export default function SkillsSection({skills}) {
 
         media.add('(prefers-reduced-motion: no-preference)', () => {
             const paths = gsap.utils.toArray('[data-map-path]')
+            const nodes = gsap.utils.toArray('[data-map-node]')
             const pathLengths = paths.map(path => path.getTotalLength())
 
             paths.forEach((path, index) => {
@@ -49,6 +51,23 @@ export default function SkillsSection({skills}) {
                     once: true,
                 },
             })
+
+            const breathing = gsap.fromTo(nodes, {
+                scale: .985,
+            }, {
+                scale: index => index % 2 === 0 ? 1.025 : 1.018,
+                duration: index => 2.7 + (index * .3),
+                ease: 'sine.inOut',
+                repeat: -1,
+                yoyo: true,
+                stagger: .18,
+                paused: true,
+            })
+
+            cycleTimer.current = gsap.delayedCall(4.8, () => {
+                setActiveIndex(index => (index + 1) % skills.length)
+                cycleTimer.current?.restart(true)
+            }).pause()
 
             timeline.fromTo('[data-map-core]', {
                 autoAlpha: 0,
@@ -75,18 +94,32 @@ export default function SkillsSection({skills}) {
                 y: 0,
                 duration: .6,
                 clearProps: 'transform,opacity,visibility',
-            }, .5)
+            }, .5).eventCallback('onComplete', () => breathing.play())
 
-            gsap.to('[data-map-node]', {
-                x: index => index % 2 === 0 ? 4 : -4,
-                y: index => index < 2 ? -5 : 5,
-                duration: index => 3.8 + (index * .35),
-                delay: 1.25,
-                ease: 'sine.inOut',
-                repeat: -1,
-                yoyo: true,
-                stagger: .16,
+            const visibilityTrigger = ScrollTrigger.create({
+                trigger: root.current,
+                start: 'top bottom',
+                end: 'bottom top',
+                onEnter: () => cycleTimer.current?.restart(true),
+                onEnterBack: () => {
+                    breathing.play()
+                    cycleTimer.current?.restart(true)
+                },
+                onLeave: () => {
+                    breathing.pause()
+                    cycleTimer.current?.pause()
+                },
+                onLeaveBack: () => {
+                    breathing.pause()
+                    cycleTimer.current?.pause()
+                },
             })
+
+            return () => {
+                breathing.kill()
+                cycleTimer.current?.kill()
+                visibilityTrigger.kill()
+            }
         })
 
         return () => media.revert()
@@ -121,14 +154,17 @@ export default function SkillsSection({skills}) {
         }
     }, {dependencies: [activeIndex], scope: root, revertOnUpdate: true})
 
-    const selectGroup = index => setActiveIndex(index)
+    const selectGroup = index => {
+        setActiveIndex(index)
+        cycleTimer.current?.restart(true)
+    }
 
     return (
         <article className='skills-section' ref={root}>
             <Title section='Capabilities' />
             <div className={style.system}>
                 <div className={style.desktopMap} aria-label='Interactive capability system map'>
-                    <svg className={style.connections} viewBox='0 0 900 440' aria-hidden='true'>
+                    <svg className={style.connections} viewBox='0 0 900 440' preserveAspectRatio='none' aria-hidden='true'>
                         {mapNodes.map((node, index) => (
                             <g key={skills[index].group}>
                                 <path className={style.basePath} data-map-path d={connection(node.point)} />
