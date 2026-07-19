@@ -9,7 +9,7 @@
     "lint": "next lint",
     "verify": "npm run lint && npm run build",
     "eslint": "eslint src/ --fix",
-    "phoenix": "rm -rf node_modules & npm i"
+    "reinstall": "npm ci"
   },
   "dependencies": {
     "@vercel/speed-insights": "^1.0.1",
