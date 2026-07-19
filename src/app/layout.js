@@ -30,7 +30,7 @@ export default function RootLayout({children}) {
             <body>
                 <Header />
                 <Particles />
-                <main className={`flex h-max flex-col overflow-x-hidden`}>
+                <main className='relative z-10 flex h-max flex-col overflow-x-hidden'>
                     <Slider />
                     <section className='flex flex-col justify-center w-[310px] m-auto md:w-[600px] lg:w-[900px]'>
                         {children}

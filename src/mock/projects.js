@@ -19,11 +19,4 @@ export const projects = [
         link: 'https://poke-force-graph-astro-react-type-script.vercel.app/', 
         img: '/pokegraph3d&2d.png'
     },
-    {
-        name: 'todo-Machine.dev',
-        description:
-        'Focused on a fast, pleasant design and user experience, using pure CSS alongside the React animation library Framer Motion.',
-        link: 'https://to-do-machine-ds6scmogi-pleo2.vercel.app/',
-        img: '/todoMachino.webp'
-    },
 ]
