@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "verify": "npm run lint && npm run build",
     "eslint": "eslint src/ --fix",
     "phoenix": "rm -rf node_modules & npm i"
   },
