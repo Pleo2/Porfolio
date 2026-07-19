@@ -1,6 +1,6 @@
 .hero {
   width: min(calc(100% - 1.5rem), 960px);
-  margin: 1rem auto 0;
+  margin: 0 auto;
   color: #e7e7e9;
 }
 
@@ -33,7 +33,7 @@
 .art [data-ascii-char] { display: inline-block; width: 1ch; will-change: transform, opacity; }
 
 @media (min-width: 768px) {
-  .hero { margin-top: 1.25rem; }
+  .hero { margin-top: 0; }
   .art, .ghost { font-size: clamp(.7rem, 1.35vw, .92rem); }
 }
 
