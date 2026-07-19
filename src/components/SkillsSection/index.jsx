@@ -38,6 +38,22 @@ const edgeHandles = {
     Delivery: 'right-bottom',
 }
 
+const driftProfiles = {
+    core: {x: 2.2, y: 2.8, speed: .42, phase: .2},
+    Frontend: {x: 4.2, y: 3.2, speed: .34, phase: 1.1},
+    Backend: {x: 3.5, y: 4.1, speed: .3, phase: 2.4},
+    Architecture: {x: 4.5, y: 3.4, speed: .28, phase: 3.6},
+    Delivery: {x: 3.8, y: 4.2, speed: .32, phase: 4.8},
+}
+
+const getDrift = (nodeId, time) => {
+    const profile = driftProfiles[nodeId]
+    return {
+        x: Math.sin(time * profile.speed + profile.phase) * profile.x,
+        y: Math.cos(time * profile.speed * .82 + profile.phase) * profile.y,
+    }
+}
+
 function CapabilityNode({data}) {
     if (data.kind === 'core') {
         return (
@@ -123,6 +139,11 @@ const createEdges = (skills, activeGroup) => skills.map(group => {
 export default function SkillsSection({skills}) {
     const root = useRef(null)
     const cycleTimer = useRef(null)
+    const draggingNode = useRef(null)
+    const graphIsVisible = useRef(false)
+    const nodeAnchors = useRef(Object.fromEntries(
+        Object.entries(positions).map(([id, position]) => [id, {...position}]),
+    ))
     const [activeIndex, setActiveIndex] = useState(0)
     const [nodes, setNodes, onNodesChange] = useNodesState(createNodes(skills))
     const activeGroup = skills[activeIndex]
@@ -178,14 +199,47 @@ export default function SkillsSection({skills}) {
                 trigger: root.current,
                 start: 'top bottom',
                 end: 'bottom top',
-                onEnter: () => cycleTimer.current?.restart(true),
-                onEnterBack: () => cycleTimer.current?.restart(true),
-                onLeave: () => cycleTimer.current?.pause(),
-                onLeaveBack: () => cycleTimer.current?.pause(),
+                onEnter: () => {
+                    graphIsVisible.current = true
+                    cycleTimer.current?.restart(true)
+                },
+                onEnterBack: () => {
+                    graphIsVisible.current = true
+                    cycleTimer.current?.restart(true)
+                },
+                onLeave: () => {
+                    graphIsVisible.current = false
+                    cycleTimer.current?.pause()
+                },
+                onLeaveBack: () => {
+                    graphIsVisible.current = false
+                    cycleTimer.current?.pause()
+                },
             })
+
+            const floatNodes = (time) => {
+                if (!graphIsVisible.current || document.hidden) return
+
+                setNodes(currentNodes => currentNodes.map(node => {
+                    if (draggingNode.current === node.id) return node
+                    const anchor = nodeAnchors.current[node.id]
+                    const drift = getDrift(node.id, time)
+                    return {
+                        ...node,
+                        position: {
+                            x: anchor.x + drift.x,
+                            y: anchor.y + drift.y,
+                        },
+                    }
+                }))
+            }
+
+            gsap.ticker.add(floatNodes)
 
             return () => {
                 cycleTimer.current?.kill()
+                graphIsVisible.current = false
+                gsap.ticker.remove(floatNodes)
                 visibilityTrigger.kill()
             }
         })
@@ -226,6 +280,21 @@ export default function SkillsSection({skills}) {
         cycleTimer.current?.restart(true)
     }
 
+    const startDragging = (_, node) => {
+        if (node.id === 'core') return
+        draggingNode.current = node.id
+        selectGroup(node.id)
+    }
+
+    const stopDragging = (_, node) => {
+        const drift = getDrift(node.id, gsap.ticker.time)
+        nodeAnchors.current[node.id] = {
+            x: node.position.x - drift.x,
+            y: node.position.y - drift.y,
+        }
+        draggingNode.current = null
+    }
+
     return (
         <article className='skills-section' ref={root}>
             <Title section='Capabilities' />
@@ -238,22 +307,26 @@ export default function SkillsSection({skills}) {
                         onNodesChange={onNodesChange}
                         onNodeClick={(_, node) => selectGroup(node.id)}
                         onNodeMouseEnter={(_, node) => selectGroup(node.id)}
-                        onNodeDragStart={(_, node) => selectGroup(node.id)}
+                        onNodeDragStart={startDragging}
+                        onNodeDragStop={stopDragging}
                         nodesConnectable={false}
                         nodesDraggable
                         nodesFocusable
                         edgesFocusable={false}
                         elementsSelectable
                         deleteKeyCode={null}
-                        nodeExtent={[[0, 0], [900, 440]]}
+                        nodeExtent={[[20, 20], [710, 328]]}
                         fitView
                         fitViewOptions={{padding: .1, minZoom: .68, maxZoom: 1}}
                         minZoom={.62}
                         maxZoom={1.15}
                         zoomOnScroll={false}
+                        zoomOnPinch={false}
                         zoomOnDoubleClick={false}
                         preventScrolling={false}
                         panOnScroll={false}
+                        panOnDrag={false}
+                        selectionOnDrag={false}
                         proOptions={{hideAttribution: true}}
                     />
                 </div>

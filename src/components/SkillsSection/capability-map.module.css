@@ -16,8 +16,8 @@
   background-size: auto, 2rem 2rem, 2rem 2rem;
 }
 
-.flowCanvas :global(.react-flow__pane) { cursor: grab; }
-.flowCanvas :global(.react-flow__pane:active) { cursor: grabbing; }
+.flowCanvas :global(.react-flow__pane) { cursor: default; }
+.flowCanvas :global(.react-flow__pane:active) { cursor: default; }
 .flowCanvas :global(.react-flow__node) { cursor: grab; }
 .flowCanvas :global(.react-flow__node:active) { cursor: grabbing; }
 .flowCanvas :global(.react-flow__node:focus-visible) { outline: none; }
@@ -85,9 +85,12 @@
 .detail {
   display: none;
   grid-template-columns: minmax(12rem, .72fr) 1.5fr;
+  align-items: center;
   gap: 2rem;
-  min-height: 9rem;
+  height: 11rem;
   padding: 1.5rem;
+  box-sizing: border-box;
+  overflow: hidden;
   border-top: 1px solid #29292f;
   background: #0c0c0f;
 }
