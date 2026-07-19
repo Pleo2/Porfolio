@@ -1,16 +1,11 @@
-'use client'
-
-import {motion} from 'framer-motion'
 import DownloadCv from '../DownloadCv'
 import Githublogo from '../Logos/Githublogo'
 
 export default function SectionCvDesktop() {
     return (
         <>
-            <motion.div
-                initial={{opacity: 0}}
-                animate={{opacity: 1}}
-                transition={{duration: 0.3 }}
+            <div
+                data-load-reveal
                 className='absolute inset-x-0 top-[16.25rem] z-20 flex items-center justify-center gap-3 md:top-[17.5rem] lg:top-[17.5rem] lg:gap-8'
             >
                 <DownloadCv />
@@ -23,7 +18,7 @@ export default function SectionCvDesktop() {
                 >
                     <Githublogo width='40px' height='40px' fill='white' />
                 </a>
-            </motion.div>
+            </div>
         </>
     )
 }

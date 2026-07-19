@@ -9,11 +9,23 @@
 
 html {
   scroll-behavior: smooth;
-  scrollbar-width: none;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none;
 }
 
-html::-webkit-scrollbar,
-body::-webkit-scrollbar { display: none; width: 0; height: 0; }
+html, body { overflow-x: clip; }
+
+*, *::before, *::after {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}
 
 body {
   margin: 0;
@@ -31,6 +43,14 @@ body {
 ::selection { color: #0a0a0c; background: #c55e58; }
 
 .scroll-experience { min-height: 100vh; }
+.load-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: #0a0a0c;
+  pointer-events: none;
+  will-change: opacity;
+}
 .ios-scroll-thumb {
   position: fixed;
   top: 0;

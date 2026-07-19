@@ -10,6 +10,7 @@ gsap.registerPlugin(useGSAP, ScrollTrigger)
 export default function ScrollExperience({children}) {
     const scope = useRef(null)
     const scrollThumb = useRef(null)
+    const loadVeil = useRef(null)
 
     useGSAP(() => {
         const media = gsap.matchMedia()
@@ -19,14 +20,39 @@ export default function ScrollExperience({children}) {
             reduceMotion: '(prefers-reduced-motion: reduce)',
         }, context => {
             const {desktop, reduceMotion} = context.conditions
+            const loadStages = gsap.utils.toArray('[data-load-reveal]')
 
             if (reduceMotion) {
-                gsap.set('[data-scroll-reveal], .project-visual, .project-content', {
+                gsap.set('[data-load-reveal], [data-scroll-reveal], .project-visual, .project-content', {
                     autoAlpha: 1,
                     clearProps: 'transform',
                 })
+                gsap.set(loadVeil.current, {autoAlpha: 0})
                 return
             }
+
+            gsap.set(loadStages, {
+                autoAlpha: 0,
+                y: 14,
+                willChange: 'transform,opacity',
+            })
+
+            const entrance = gsap.timeline({
+                delay: .08,
+                defaults: {ease: 'power3.out'},
+            })
+
+            entrance.to(loadVeil.current, {
+                autoAlpha: 0,
+                duration: .7,
+                ease: 'power2.out',
+            }).to(loadStages, {
+                autoAlpha: 1,
+                y: 0,
+                duration: .78,
+                stagger: .13,
+                clearProps: 'transform,opacity,visibility,will-change',
+            }, '-=.48')
 
             gsap.utils.toArray('[data-scroll-reveal]').forEach(element => {
                 gsap.fromTo(element, {
@@ -116,6 +142,7 @@ export default function ScrollExperience({children}) {
     return (
         <div ref={scope} className='scroll-experience'>
             {children}
+            <div ref={loadVeil} className='load-veil' aria-hidden='true' />
             <div ref={scrollThumb} className='ios-scroll-thumb' aria-hidden='true' />
         </div>
     )

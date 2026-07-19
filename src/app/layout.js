@@ -26,9 +26,9 @@ export default function RootLayout({children}) {
                 <link rel='icon' href='/icon.svg' />
             </head>
             <body>
-                <Header />
                 <Particles />
                 <ScrollExperience>
+                    <Header />
                     <main className='relative z-10 flex h-max flex-col overflow-x-hidden'>
                         <Slider />
                         <section className='flex flex-col justify-center w-[310px] m-auto md:w-[600px] lg:w-[900px]'>

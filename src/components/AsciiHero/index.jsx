@@ -37,7 +37,7 @@ export default function AsciiHero() {
         })
         gsap.set(animatedCharacters, {autoAlpha: 0, y: 12})
 
-        const intro = gsap.timeline({defaults: {ease: 'power3.out'}})
+        const intro = gsap.timeline({delay: .18, defaults: {ease: 'power3.out'}})
         animatedCharacters.forEach((character, index) => {
             intro.to(character, {
                 autoAlpha: 1,

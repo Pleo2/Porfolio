@@ -43,7 +43,7 @@ export default function Slider() {
     }, {scope: root})
 
     return (
-        <section className={style.slider} ref={root} aria-label='Technology stack'>
+        <section className={style.slider} ref={root} data-load-reveal aria-label='Technology stack'>
             <div className={style.track} ref={track}><LogoGroup /><LogoGroup hidden /></div>
         </section>
     )
