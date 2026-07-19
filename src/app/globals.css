@@ -73,11 +73,6 @@ body {
 .section-heading h2 { margin: 0; color: #dedee2; font: 550 clamp(2rem, 7vw, 3rem)/.95 var(--font-sans); letter-spacing: -.045em; }
 
 .skills-section { position: relative; z-index: 10; padding-bottom: 1rem; }
-.capability-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin-top: 1.2rem; padding: 1px; background: #29292f; }
-.capability-group { min-width: 0; padding: 1.1rem; background: #0c0c0f; }
-.capability-group h3 { margin: 0 0 1.2rem; color: #d9d9de; font: 500 .9rem/1 var(--font-sans); }
-.capability-group ul { display: grid; gap: .52rem; margin: 0; padding: 0; color: #85858e; font: 400 clamp(.72rem, 2.4vw, .86rem)/1.35 var(--font-sans); list-style: none; }
-.capability-group li::before { margin-right: .5rem; color: #c55e58; content: '·'; }
 
 .experience-list { margin-top: 1.2rem; border-top: 1px solid #29292f; }
 .experience-item { display: grid; gap: .7rem 1rem; padding: 1.25rem 0; border-bottom: 1px solid #29292f; }
@@ -113,7 +108,6 @@ body {
 .site-footer a:hover { color: #c55e58; }
 .site-footer-meta { align-self: end; }
 
-@media (min-width: 640px) { .capability-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 @media (min-width: 768px) {
   .experience-item { grid-template-columns: .7fr .45fr 1.3fr; align-items: start; }
   .experience-item time { grid-column: 2; grid-row: 1; margin-top: .05rem; }
