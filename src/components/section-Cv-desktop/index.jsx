@@ -11,7 +11,7 @@ export default function SectionCvDesktop() {
                 initial={{opacity: 0}}
                 animate={{opacity: 1}}
                 transition={{duration: 0.3 }}
-                className='absolute inset-x-0 top-[11.8rem] z-20 flex items-center justify-center gap-3 md:top-[13rem] lg:top-[32rem] lg:gap-8'
+                className='absolute inset-x-0 top-[18.5rem] z-20 flex items-center justify-center gap-3 md:top-[21rem] lg:top-[22rem] lg:gap-8'
             >
                 <DownloadCv />
                 <a
