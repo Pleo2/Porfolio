@@ -1,6 +1,13 @@
 'use client'
 
-import {useRef, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
+import {
+    Handle,
+    MarkerType,
+    Position,
+    ReactFlow,
+    useNodesState,
+} from '@xyflow/react'
 import gsap from 'gsap'
 import {ScrollTrigger} from 'gsap/ScrollTrigger'
 import {useGSAP} from '@gsap/react'
@@ -9,42 +16,131 @@ import style from './capability-map.module.css'
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
-const mapNodes = [
-    {x: 14, y: 22, point: [126, 97], description: 'Interfaces and product surfaces'},
-    {x: 86, y: 22, point: [774, 97], description: 'Services, data and APIs'},
-    {x: 14, y: 78, point: [126, 343], description: 'Boundaries, scale and security'},
-    {x: 86, y: 78, point: [774, 343], description: 'Automation, reliability and reach'},
+const groupsMeta = {
+    Frontend: {description: 'Interfaces and product surfaces', side: 'left'},
+    Backend: {description: 'Services, data and APIs', side: 'right'},
+    Architecture: {description: 'Boundaries, scale and security', side: 'left'},
+    Delivery: {description: 'Automation, reliability and reach', side: 'right'},
+}
+
+const positions = {
+    core: {x: 355, y: 155},
+    Frontend: {x: 30, y: 38},
+    Backend: {x: 680, y: 38},
+    Architecture: {x: 30, y: 310},
+    Delivery: {x: 680, y: 310},
+}
+
+const edgeHandles = {
+    Frontend: 'left-top',
+    Backend: 'right-top',
+    Architecture: 'left-bottom',
+    Delivery: 'right-bottom',
+}
+
+function CapabilityNode({data}) {
+    if (data.kind === 'core') {
+        return (
+            <div className={`${style.flowNode} ${style.coreNode}`} data-capability-node>
+                <Handle className={style.handle} id='left-top' type='source' position={Position.Left} style={{top: '32%'}} />
+                <Handle className={style.handle} id='left-bottom' type='source' position={Position.Left} style={{top: '68%'}} />
+                <Handle className={style.handle} id='right-top' type='source' position={Position.Right} style={{top: '32%'}} />
+                <Handle className={style.handle} id='right-bottom' type='source' position={Position.Right} style={{top: '68%'}} />
+                <span>PLEO2</span>
+                <strong>Product<br />Engineering</strong>
+            </div>
+        )
+    }
+
+    return (
+        <div
+            className={`${style.flowNode} ${style.categoryNode} ${data.active ? style.categoryNodeActive : ''}`}
+            data-capability-node
+            data-capability-active={data.active || undefined}
+        >
+            <Handle
+                className={style.handle}
+                type='target'
+                position={data.side === 'left' ? Position.Right : Position.Left}
+            />
+            <span>{data.label}</span>
+            <small>{data.description}</small>
+            <em>{data.active ? 'Active' : 'Drag / explore'}</em>
+        </div>
+    )
+}
+
+const nodeTypes = {capability: CapabilityNode}
+
+const createNodes = skills => [
+    {
+        id: 'core',
+        type: 'capability',
+        position: positions.core,
+        draggable: false,
+        selectable: false,
+        data: {kind: 'core'},
+    },
+    ...skills.map((group, index) => ({
+        id: group.group,
+        type: 'capability',
+        position: positions[group.group],
+        data: {
+            label: group.group,
+            description: groupsMeta[group.group].description,
+            side: groupsMeta[group.group].side,
+            active: index === 0,
+        },
+    })),
 ]
 
-const connection = ([x, y]) => {
-    const direction = x < 450 ? -1 : 1
-    return `M 450 220 C ${450 + (direction * 115)} 220, ${x - (direction * 95)} ${y}, ${x} ${y}`
-}
+const createEdges = (skills, activeGroup) => skills.map(group => {
+    const active = group.group === activeGroup
+
+    return {
+        id: `core-${group.group}`,
+        source: 'core',
+        sourceHandle: edgeHandles[group.group],
+        target: group.group,
+        type: 'bezier',
+        animated: active,
+        focusable: false,
+        selectable: false,
+        markerEnd: {
+            type: MarkerType.ArrowClosed,
+            width: 14,
+            height: 14,
+            color: active ? '#c55e58' : '#42424a',
+        },
+        style: {
+            stroke: active ? '#c55e58' : '#383840',
+            strokeWidth: active ? 1.4 : 1,
+            opacity: active ? .95 : .62,
+        },
+    }
+})
 
 export default function SkillsSection({skills}) {
     const root = useRef(null)
     const cycleTimer = useRef(null)
     const [activeIndex, setActiveIndex] = useState(0)
+    const [nodes, setNodes, onNodesChange] = useNodesState(createNodes(skills))
     const activeGroup = skills[activeIndex]
-    const activeMeta = mapNodes[activeIndex]
+    const activeMeta = groupsMeta[activeGroup.group]
+    const edges = createEdges(skills, activeGroup.group)
+
+    useEffect(() => {
+        setNodes(currentNodes => currentNodes.map(node => {
+            if (node.id === 'core') return node
+            return {...node, data: {...node.data, active: node.id === activeGroup.group}}
+        }))
+    }, [activeGroup.group, setNodes])
 
     useGSAP(() => {
         const media = gsap.matchMedia()
 
         media.add('(prefers-reduced-motion: no-preference)', () => {
-            const paths = gsap.utils.toArray('[data-map-path]')
-            const nodes = gsap.utils.toArray('[data-map-node]')
-            const pathLengths = paths.map(path => path.getTotalLength())
-
-            paths.forEach((path, index) => {
-                gsap.set(path, {
-                    strokeDasharray: pathLengths[index],
-                    strokeDashoffset: pathLengths[index],
-                })
-            })
-
-            const timeline = gsap.timeline({
-                defaults: {ease: 'power3.out'},
+            const entrance = gsap.timeline({
                 scrollTrigger: {
                     trigger: root.current,
                     start: 'top 82%',
@@ -52,71 +148,43 @@ export default function SkillsSection({skills}) {
                 },
             })
 
-            const breathing = gsap.fromTo(nodes, {
-                scale: .985,
+            entrance.fromTo('[data-capability-node]', {
+                autoAlpha: 0,
+                scale: .92,
             }, {
-                scale: index => index % 2 === 0 ? 1.025 : 1.018,
-                duration: index => 2.7 + (index * .3),
-                ease: 'sine.inOut',
-                repeat: -1,
-                yoyo: true,
-                stagger: .18,
-                paused: true,
-            })
+                autoAlpha: 1,
+                scale: 1,
+                duration: .65,
+                stagger: .08,
+                ease: 'power3.out',
+                clearProps: 'transform,opacity,visibility',
+            }).fromTo('[data-map-detail]', {
+                autoAlpha: 0,
+                y: 12,
+            }, {
+                autoAlpha: 1,
+                y: 0,
+                duration: .55,
+                ease: 'power3.out',
+                clearProps: 'transform,opacity,visibility',
+            }, .25)
 
             cycleTimer.current = gsap.delayedCall(4.8, () => {
                 setActiveIndex(index => (index + 1) % skills.length)
                 cycleTimer.current?.restart(true)
             }).pause()
 
-            timeline.fromTo('[data-map-core]', {
-                autoAlpha: 0,
-                scale: .88,
-            }, {
-                autoAlpha: 1,
-                scale: 1,
-                duration: .7,
-            }).to(paths, {
-                strokeDashoffset: 0,
-                duration: .9,
-                stagger: .08,
-            }, .12).fromTo('[data-map-node]', {
-                scale: .9,
-            }, {
-                scale: 1,
-                duration: .55,
-                stagger: .08,
-            }, .3).fromTo('[data-map-detail]', {
-                autoAlpha: 0,
-                y: 12,
-            }, {
-                autoAlpha: 1,
-                y: 0,
-                duration: .6,
-                clearProps: 'transform,opacity,visibility',
-            }, .5).eventCallback('onComplete', () => breathing.play())
-
             const visibilityTrigger = ScrollTrigger.create({
                 trigger: root.current,
                 start: 'top bottom',
                 end: 'bottom top',
                 onEnter: () => cycleTimer.current?.restart(true),
-                onEnterBack: () => {
-                    breathing.play()
-                    cycleTimer.current?.restart(true)
-                },
-                onLeave: () => {
-                    breathing.pause()
-                    cycleTimer.current?.pause()
-                },
-                onLeaveBack: () => {
-                    breathing.pause()
-                    cycleTimer.current?.pause()
-                },
+                onEnterBack: () => cycleTimer.current?.restart(true),
+                onLeave: () => cycleTimer.current?.pause(),
+                onLeaveBack: () => cycleTimer.current?.pause(),
             })
 
             return () => {
-                breathing.kill()
                 cycleTimer.current?.kill()
                 visibilityTrigger.kill()
             }
@@ -126,35 +194,34 @@ export default function SkillsSection({skills}) {
     }, {scope: root})
 
     useGSAP(() => {
-        const signals = gsap.utils.toArray('[data-map-signal]')
-        const activeSignal = signals[activeIndex]
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
-        gsap.to(signals, {autoAlpha: 0, duration: .2, overwrite: true})
-        gsap.to(activeSignal, {autoAlpha: 1, duration: .35, overwrite: true})
+        gsap.fromTo('[data-capability-active]', {
+            filter: 'brightness(1.28)',
+        }, {
+            filter: 'brightness(1)',
+            duration: .65,
+            ease: 'power2.out',
+            clearProps: 'filter',
+        })
 
-        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            gsap.fromTo(activeSignal, {strokeDashoffset: 0}, {
-                strokeDashoffset: -52,
-                duration: 2.4,
-                ease: 'none',
-                repeat: -1,
-            })
-
-            gsap.fromTo('[data-map-skill]', {
-                autoAlpha: 0,
-                y: 8,
-            }, {
-                autoAlpha: 1,
-                y: 0,
-                duration: .38,
-                stagger: .035,
-                ease: 'power2.out',
-                clearProps: 'transform,opacity,visibility',
-            })
-        }
+        gsap.fromTo('[data-map-skill]', {
+            autoAlpha: 0,
+            y: 8,
+        }, {
+            autoAlpha: 1,
+            y: 0,
+            duration: .38,
+            stagger: .035,
+            ease: 'power2.out',
+            clearProps: 'transform,opacity,visibility',
+        })
     }, {dependencies: [activeIndex], scope: root, revertOnUpdate: true})
 
-    const selectGroup = index => {
+    const selectGroup = groupId => {
+        if (groupId === 'core') return
+        const index = skills.findIndex(group => group.group === groupId)
+        if (index < 0) return
         setActiveIndex(index)
         cycleTimer.current?.restart(true)
     }
@@ -163,38 +230,32 @@ export default function SkillsSection({skills}) {
         <article className='skills-section' ref={root}>
             <Title section='Capabilities' />
             <div className={style.system}>
-                <div className={style.desktopMap} aria-label='Interactive capability system map'>
-                    <svg className={style.connections} viewBox='0 0 900 440' preserveAspectRatio='none' aria-hidden='true'>
-                        {mapNodes.map((node, index) => (
-                            <g key={skills[index].group}>
-                                <path className={style.basePath} data-map-path d={connection(node.point)} />
-                                <path className={`${style.signalPath} ${index === activeIndex ? style.signalPathActive : ''}`} data-map-signal d={connection(node.point)} />
-                            </g>
-                        ))}
-                    </svg>
-
-                    <div className={style.core} data-map-core>
-                        <span>PLEO2</span>
-                        <strong>Product<br />Engineering</strong>
-                    </div>
-
-                    {skills.map((group, index) => (
-                        <button
-                            className={`${style.mapNode} ${index === activeIndex ? style.mapNodeActive : ''}`}
-                            data-map-node
-                            key={group.group}
-                            type='button'
-                            style={{'--node-x': `${mapNodes[index].x}%`, '--node-y': `${mapNodes[index].y}%`}}
-                            aria-pressed={index === activeIndex}
-                            onClick={() => selectGroup(index)}
-                            onFocus={() => selectGroup(index)}
-                            onMouseEnter={() => selectGroup(index)}
-                        >
-                            <span>{group.group}</span>
-                            <small>{mapNodes[index].description}</small>
-                            <em>{index === activeIndex ? 'Active' : 'Explore'}</em>
-                        </button>
-                    ))}
+                <div className={style.flowCanvas} aria-label='Interactive draggable capability graph'>
+                    <ReactFlow
+                        nodes={nodes}
+                        edges={edges}
+                        nodeTypes={nodeTypes}
+                        onNodesChange={onNodesChange}
+                        onNodeClick={(_, node) => selectGroup(node.id)}
+                        onNodeMouseEnter={(_, node) => selectGroup(node.id)}
+                        onNodeDragStart={(_, node) => selectGroup(node.id)}
+                        nodesConnectable={false}
+                        nodesDraggable
+                        nodesFocusable
+                        edgesFocusable={false}
+                        elementsSelectable
+                        deleteKeyCode={null}
+                        nodeExtent={[[0, 0], [900, 440]]}
+                        fitView
+                        fitViewOptions={{padding: .1, minZoom: .68, maxZoom: 1}}
+                        minZoom={.62}
+                        maxZoom={1.15}
+                        zoomOnScroll={false}
+                        zoomOnDoubleClick={false}
+                        preventScrolling={false}
+                        panOnScroll={false}
+                        proOptions={{hideAttribution: true}}
+                    />
                 </div>
 
                 <div className={style.detail} data-map-detail aria-live='polite'>
@@ -211,7 +272,7 @@ export default function SkillsSection({skills}) {
                 <div className={style.mobileRoutes} aria-label='Capability groups'>
                     {skills.map((group, index) => (
                         <section className={`${style.mobileRoute} ${index === activeIndex ? style.mobileRouteActive : ''}`} key={group.group}>
-                            <button type='button' aria-expanded={index === activeIndex} onClick={() => selectGroup(index)}>
+                            <button type='button' aria-expanded={index === activeIndex} onClick={() => selectGroup(group.group)}>
                                 <span>{group.group}</span>
                                 <small>{index === activeIndex ? 'Close' : 'Explore'}</small>
                             </button>
