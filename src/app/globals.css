@@ -43,6 +43,13 @@ body {
 ::selection { color: #0a0a0c; background: #c55e58; }
 
 .scroll-experience { min-height: 100vh; }
+.portfolio-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: min(calc(100% - 2rem), 900px);
+  margin-inline: auto;
+}
 .load-veil {
   position: fixed;
   inset: 0;
@@ -108,13 +115,16 @@ body {
 .site-footer a:hover { color: #c55e58; }
 .site-footer-meta { align-self: end; }
 
-@media (min-width: 768px) {
+@media (min-width: 900px) {
   .experience-item { grid-template-columns: .7fr .45fr 1.3fr; align-items: start; }
   .experience-item time { grid-column: 2; grid-row: 1; margin-top: .05rem; }
   .experience-copy { grid-column: 3; }
   .experience-copy p { margin-top: 0; }
   .project-case { grid-template-columns: minmax(0, 1.15fr) minmax(15rem, .85fr); align-items: stretch; gap: 2.2rem; padding: 2rem 0; }
   .project-visual { min-height: 20rem; }
+}
+
+@media (min-width: 768px) {
   .site-footer-inner { grid-template-columns: 1fr auto auto; align-items: start; }
   .site-footer-meta { margin-top: 0; text-align: right; }
 }

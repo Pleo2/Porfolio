@@ -40,7 +40,7 @@ export default function SkillsSection({skills}) {
     useGSAP(() => {
         const media = gsap.matchMedia()
 
-        media.add('(prefers-reduced-motion: no-preference)', () => {
+        media.add('(min-width: 900px) and (prefers-reduced-motion: no-preference)', () => {
             const entrance = gsap.timeline({
                 scrollTrigger: {
                     trigger: root.current,

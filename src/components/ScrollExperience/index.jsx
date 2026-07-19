@@ -16,7 +16,7 @@ export default function ScrollExperience({children}) {
         const media = gsap.matchMedia()
 
         media.add({
-            desktop: '(min-width: 768px)',
+            desktop: '(min-width: 900px)',
             reduceMotion: '(prefers-reduced-motion: reduce)',
         }, context => {
             const {desktop, reduceMotion} = context.conditions

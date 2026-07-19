@@ -167,7 +167,7 @@
 .mobileRoute ul { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0; padding: 0 0 1.15rem; list-style: none; }
 .mobileRoute li { padding: .55rem .62rem; color: #96969f; border: 1px solid #2d2d34; font: 400 .62rem/1 var(--font-mono); }
 
-@media (min-width: 640px) {
+@media (min-width: 900px) {
   .flowCanvas { display: block; }
   .detail { display: grid; }
   .mobileRoutes { display: none; }
