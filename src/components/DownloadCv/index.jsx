@@ -6,13 +6,13 @@ export default function DownloadCv() {
         <>
             <div className='shrink-0'>
                 <Card>
-                    <div className='w-full flex mt-1 justify-center items-center'>
+                    <div className='flex h-12 w-full items-center justify-center'>
                         <Link
                             href='/JoseMoreno-Full-Stack-Web-Developer.pdf'
                             target='_blank'
-                            className='font-display text-xl text-zinc-200 px-2 hover:text-white duration-500 md:text-2xl'
+                            className='inline-flex h-full items-center px-2 font-display text-xl leading-none text-zinc-200 duration-500 hover:text-white md:text-2xl'
                         >
-                            Download-CV
+                            Download CV
                         </Link>
                     </div>
                 </Card>
