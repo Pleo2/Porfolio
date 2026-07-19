@@ -92,7 +92,7 @@
   box-sizing: border-box;
   overflow: hidden;
   border-top: 1px solid #29292f;
-  background: #0c0c0f;
+  background: transparent;
 }
 
 .detailHeading span { color: #6d6d76; font: 500 .52rem/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; }
