@@ -17,20 +17,30 @@ export default function Particles({
   const canvasContainerRef = useRef(null)
   const context = useRef(null)
   const circles = useRef([])
+  const animationFrame = useRef(null)
+  const isMounted = useRef(false)
   const mousePosition = useMousePosition()
   const mouse = useRef({x: 0, y: 0})
   const canvasSize = useRef({w: 0, h: 0})
   const dpr = typeof window !== 'undefined' ? window.devicePixelRatio : 1
 
   useEffect(() => {
+    isMounted.current = true
     if (canvasRef.current) {
       context.current = canvasRef.current.getContext('2d')
     }
     initCanvas()
-    animate()
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (!reducedMotion) {
+      animate()
+    }
     window.addEventListener('resize', initCanvas)
 
     return () => {
+      isMounted.current = false
+      if (animationFrame.current !== null) {
+        window.cancelAnimationFrame(animationFrame.current)
+      }
       window.removeEventListener('resize', initCanvas)
     }
   }, [])
@@ -71,7 +81,7 @@ export default function Particles({
       canvasRef.current.height = canvasSize.current.h * dpr
       canvasRef.current.style.width = `${canvasSize.current.w}px`
       canvasRef.current.style.height = `${canvasSize.current.h}px`
-      context.current.scale(dpr, dpr)
+      context.current.setTransform(dpr, 0, 0, dpr, 0, 0)
     }
   }
 
@@ -144,7 +154,8 @@ export default function Particles({
 
   const animate = () => {
     clearContext()
-    circles.current.forEach((circle, i) => {
+    for (let i = circles.current.length - 1; i >= 0; i--) {
+      const circle = circles.current[i]
       // Handle the alpha value
       const edge = [
         circle.x + circle.translateX - circle.size, // distance from left edge
@@ -180,10 +191,8 @@ export default function Particles({
         circle.y > canvasSize.current.h + circle.size
       ) {
         // remove the circle from the array
-        circles.current.splice(i, 1)
-        // create a new circle
-        const newCircle = circleParams()
-        drawCircle(newCircle)
+        circles.current[i] = circleParams()
+        drawCircle(circles.current[i], true)
         // update the circle position
       } else {
         drawCircle(
@@ -198,8 +207,10 @@ export default function Particles({
           true
         )
       }
-    })
-    window.requestAnimationFrame(animate)
+    }
+    if (isMounted.current) {
+      animationFrame.current = window.requestAnimationFrame(animate)
+    }
   }
 
   return (
