@@ -1,16 +1,12 @@
 import './globals.css'
 import Header from '@/components/Header/Header'
 import {JetBrains_Mono as JetBrainsMono} from 'next/font/google'
-import localFont from 'next/font/local'
+import {CalSansUI} from '@calcom/cal-sans-ui/ui'
 import {SpeedInsights} from '@vercel/speed-insights/next'
 import Particles from '@/components/Particles'
 import Slider from '@/components/Slider'
 import SiteFooter from '@/components/SiteFooter'
 
-const calSans = localFont({
-    src: '../../public/CalSans-SemiBold.woff2',
-    variable: '--font-calSans',
-})
 const jetBrainsMono = JetBrainsMono({
     subsets: ['latin'],
     variable: '--font-jetbrains-mono',
@@ -24,7 +20,7 @@ export const metadata = {
 
 export default function RootLayout({children}) {
     return (
-        <html lang='en' className={`${calSans.variable} ${jetBrainsMono.variable}`}>
+        <html lang='en' className={`${CalSansUI.variable} ${jetBrainsMono.variable}`}>
             <head>
                 <link rel='icon' href='/icon.svg' />
             </head>

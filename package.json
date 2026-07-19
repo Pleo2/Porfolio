@@ -12,6 +12,7 @@
     "reinstall": "npm ci"
   },
   "dependencies": {
+    "@calcom/cal-sans-ui": "^1.3.0",
     "@gsap/react": "^2.1.2",
     "@vercel/speed-insights": "^1.0.1",
     "framer-motion": "^10.12.7",

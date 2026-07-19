@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --font-sans: var(--font-calSans), Arial, sans-serif;
+  --font-sans: var(--font-cal-sans-ui), Arial, sans-serif;
   --font-mono: var(--font-jetbrains-mono), 'Courier New', monospace;
 }
 
@@ -16,6 +16,7 @@ body {
     #0a0a0c;
   background-size: 32px 32px;
   font-family: var(--font-sans);
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -26,18 +27,18 @@ body {
   padding-bottom: .35rem;
 }
 
-.section-heading h2 { margin: 0; color: #dedee2; font: 600 clamp(2rem, 7vw, 3rem)/.95 var(--font-calSans); letter-spacing: -.045em; }
+.section-heading h2 { margin: 0; color: #dedee2; font: 550 clamp(2rem, 7vw, 3rem)/.95 var(--font-sans); letter-spacing: -.045em; }
 
 .skills-section { position: relative; z-index: 10; padding-bottom: 1rem; }
 .capability-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin-top: 1.2rem; padding: 1px; background: #29292f; }
 .capability-group { min-width: 0; padding: 1.1rem; background: #0c0c0f; }
-.capability-group h3 { margin: 0 0 1.2rem; color: #d9d9de; font: 600 .9rem/1 var(--font-sans); }
+.capability-group h3 { margin: 0 0 1.2rem; color: #d9d9de; font: 500 .9rem/1 var(--font-sans); }
 .capability-group ul { display: grid; gap: .52rem; margin: 0; padding: 0; color: #85858e; font: 400 clamp(.72rem, 2.4vw, .86rem)/1.35 var(--font-sans); list-style: none; }
 .capability-group li::before { margin-right: .5rem; color: #c55e58; content: '·'; }
 
 .experience-list { margin-top: 1.2rem; border-top: 1px solid #29292f; }
 .experience-item { display: grid; gap: .7rem 1rem; padding: 1.25rem 0; border-bottom: 1px solid #29292f; }
-.experience-role h3 { margin: 0; color: #dedee2; font: 600 1.05rem/1.15 var(--font-calSans); }
+.experience-role h3 { margin: 0; color: #dedee2; font: 500 1.05rem/1.15 var(--font-sans); }
 .experience-role p, .experience-item time { margin: .3rem 0 0; color: #777780; font: 500 .6rem/1.4 var(--font-mono); letter-spacing: .035em; text-transform: uppercase; }
 .experience-copy { min-width: 0; }
 .experience-copy p { margin: .25rem 0 .65rem; color: #a1a1aa; font-size: .8rem; line-height: 1.65; }
@@ -51,7 +52,7 @@ body {
 .project-content { display: flex; flex-direction: column; justify-content: center; min-width: 0; }
 .project-meta { display: flex; justify-content: space-between; margin-bottom: 1.35rem; color: #696972; font: 500 .58rem/1 var(--font-mono); letter-spacing: .045em; text-transform: uppercase; }
 .project-meta span:last-child { color: #a65d58; }
-.project-content h3 { margin: 0; color: #dedee2; font: 600 clamp(1.8rem, 6vw, 3rem)/.95 var(--font-calSans); letter-spacing: -.04em; }
+.project-content h3 { margin: 0; color: #dedee2; font: 550 clamp(1.8rem, 6vw, 3rem)/.95 var(--font-sans); letter-spacing: -.04em; }
 .project-content > p { max-width: 36rem; margin: 1rem 0 0; color: #96969f; font-size: 1rem; line-height: 1.65; }
 .project-case:hover .project-visual img { filter: saturate(.95) contrast(1); transform: scale(1.018); }
 .project-case:hover .project-content h3 { color: #fff; }
