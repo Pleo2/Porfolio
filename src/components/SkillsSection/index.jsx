@@ -1,13 +1,6 @@
 'use client'
 
-import {useEffect, useRef, useState} from 'react'
-import {
-    Handle,
-    MarkerType,
-    Position,
-    ReactFlow,
-    useNodesState,
-} from '@xyflow/react'
+import {useRef, useState} from 'react'
 import gsap from 'gsap'
 import {ScrollTrigger} from 'gsap/ScrollTrigger'
 import {useGSAP} from '@gsap/react'
@@ -23,136 +16,26 @@ const groupsMeta = {
     Delivery: {description: 'Automation, reliability and reach', side: 'right'},
 }
 
-const positions = {
-    core: {x: 355, y: 155},
-    Frontend: {x: 30, y: 38},
-    Backend: {x: 680, y: 38},
-    Architecture: {x: 30, y: 310},
-    Delivery: {x: 680, y: 310},
+const nodePositionClasses = {
+    Frontend: 'nodeFrontend',
+    Backend: 'nodeBackend',
+    Architecture: 'nodeArchitecture',
+    Delivery: 'nodeDelivery',
 }
 
-const edgeHandles = {
-    Frontend: 'left-top',
-    Backend: 'right-top',
-    Architecture: 'left-bottom',
-    Delivery: 'right-bottom',
+const connections = {
+    Frontend: 'M 355 196 C 300 196, 285 84, 220 84',
+    Backend: 'M 545 196 C 600 196, 615 84, 680 84',
+    Architecture: 'M 355 242 C 300 242, 285 356, 220 356',
+    Delivery: 'M 545 242 C 600 242, 615 356, 680 356',
 }
-
-const fitOptions = {padding: .1, minZoom: .68, maxZoom: 1, duration: 0}
-
-function CapabilityNode({data}) {
-    if (data.kind === 'core') {
-        return (
-            <div className={`${style.flowNode} ${style.coreNode}`} data-capability-node>
-                <Handle className={style.handle} id='left-top' type='source' position={Position.Left} style={{top: '32%'}} />
-                <Handle className={style.handle} id='left-bottom' type='source' position={Position.Left} style={{top: '68%'}} />
-                <Handle className={style.handle} id='right-top' type='source' position={Position.Right} style={{top: '32%'}} />
-                <Handle className={style.handle} id='right-bottom' type='source' position={Position.Right} style={{top: '68%'}} />
-                <span>PLEO2</span>
-                <strong>Product<br />Engineering</strong>
-            </div>
-        )
-    }
-
-    return (
-        <div
-            className={`${style.flowNode} ${style.categoryNode} ${data.active ? style.categoryNodeActive : ''}`}
-            data-capability-node
-            data-capability-active={data.active || undefined}
-        >
-            <Handle
-                className={style.handle}
-                type='target'
-                position={data.side === 'left' ? Position.Right : Position.Left}
-            />
-            <span>{data.label}</span>
-            <small>{data.description}</small>
-            <em>{data.active ? 'Active' : 'Explore'}</em>
-        </div>
-    )
-}
-
-const nodeTypes = {capability: CapabilityNode}
-
-const createNodes = skills => [
-    {
-        id: 'core',
-        type: 'capability',
-        position: positions.core,
-        draggable: false,
-        selectable: false,
-        data: {kind: 'core'},
-    },
-    ...skills.map((group, index) => ({
-        id: group.group,
-        type: 'capability',
-        position: positions[group.group],
-        data: {
-            label: group.group,
-            description: groupsMeta[group.group].description,
-            side: groupsMeta[group.group].side,
-            active: index === 0,
-        },
-    })),
-]
-
-const createEdges = (skills, activeGroup) => skills.map(group => {
-    const active = group.group === activeGroup
-
-    return {
-        id: `core-${group.group}`,
-        source: 'core',
-        sourceHandle: edgeHandles[group.group],
-        target: group.group,
-        type: 'bezier',
-        animated: active,
-        focusable: false,
-        selectable: false,
-        markerEnd: {
-            type: MarkerType.ArrowClosed,
-            width: 14,
-            height: 14,
-            color: active ? '#c55e58' : '#42424a',
-        },
-        style: {
-            stroke: active ? '#c55e58' : '#383840',
-            strokeWidth: active ? 1.4 : 1,
-            opacity: active ? .95 : .62,
-        },
-    }
-})
 
 export default function SkillsSection({skills}) {
     const root = useRef(null)
-    const flowCanvas = useRef(null)
-    const flowInstance = useRef(null)
     const cycleTimer = useRef(null)
     const [activeIndex, setActiveIndex] = useState(0)
-    const [nodes, setNodes] = useNodesState(createNodes(skills))
     const activeGroup = skills[activeIndex]
     const activeMeta = groupsMeta[activeGroup.group]
-    const edges = createEdges(skills, activeGroup.group)
-
-    useEffect(() => {
-        setNodes(currentNodes => currentNodes.map(node => {
-            const active = node.id !== 'core' && node.id === activeGroup.group
-            return {
-                ...node,
-                position: {...positions[node.id]},
-                data: node.id === 'core' ? node.data : {...node.data, active},
-            }
-        }))
-    }, [activeGroup.group, setNodes])
-
-    useEffect(() => {
-        if (!flowCanvas.current) return
-
-        const centerMap = () => flowInstance.current?.fitView(fitOptions)
-        const resizeObserver = new ResizeObserver(centerMap)
-        resizeObserver.observe(flowCanvas.current)
-
-        return () => resizeObserver.disconnect()
-    }, [])
 
     useGSAP(() => {
         const media = gsap.matchMedia()
@@ -245,41 +128,59 @@ export default function SkillsSection({skills}) {
     }
 
     return (
-        <article className='skills-section' ref={root}>
+        <article className='skills-section' id='capabilities' ref={root}>
             <Title section='Capabilities' />
             <div className={style.system}>
-                <div className={style.flowCanvas} ref={flowCanvas} aria-label='Interactive capability graph'>
-                    <ReactFlow
-                        key='static-centered-capability-map'
-                        nodes={nodes}
-                        edges={edges}
-                        nodeTypes={nodeTypes}
-                        onInit={instance => {
-                            flowInstance.current = instance
-                            requestAnimationFrame(() => instance.fitView(fitOptions))
-                        }}
-                        onNodeClick={(_, node) => selectGroup(node.id)}
-                        onNodeMouseEnter={(_, node) => selectGroup(node.id)}
-                        nodesConnectable={false}
-                        nodesDraggable={false}
-                        nodesFocusable
-                        edgesFocusable={false}
-                        elementsSelectable
-                        deleteKeyCode={null}
-                        nodeExtent={[[20, 20], [710, 328]]}
-                        fitView
-                        fitViewOptions={fitOptions}
-                        minZoom={.62}
-                        maxZoom={1.15}
-                        zoomOnScroll={false}
-                        zoomOnPinch={false}
-                        zoomOnDoubleClick={false}
-                        preventScrolling={false}
-                        panOnScroll={false}
-                        panOnDrag={false}
-                        selectionOnDrag={false}
-                        proOptions={{hideAttribution: true}}
-                    />
+                <div className={style.flowCanvas} aria-label='Interactive capability graph'>
+                    <svg className={style.connections} viewBox='0 0 900 440' preserveAspectRatio='none' aria-hidden='true'>
+                        <defs>
+                            <marker id='capability-arrow' markerWidth='8' markerHeight='8' refX='6.5' refY='4' orient='auto' markerUnits='strokeWidth'>
+                                <path d='M 0 0 L 8 4 L 0 8 Z' fill='#42424a' />
+                            </marker>
+                            <marker id='capability-arrow-active' markerWidth='8' markerHeight='8' refX='6.5' refY='4' orient='auto' markerUnits='strokeWidth'>
+                                <path d='M 0 0 L 8 4 L 0 8 Z' fill='#c55e58' />
+                            </marker>
+                        </defs>
+                        {skills.map(group => (
+                            <path
+                                className={group.group === activeGroup.group ? style.connectionActive : style.connection}
+                                d={connections[group.group]}
+                                key={group.group}
+                                markerEnd={group.group === activeGroup.group ? 'url(#capability-arrow-active)' : 'url(#capability-arrow)'}
+                                vectorEffect='non-scaling-stroke'
+                            />
+                        ))}
+                    </svg>
+
+                    <div className={`${style.flowNode} ${style.coreNode}`} data-capability-node>
+                        <i className={`${style.port} ${style.portLeftTop}`} />
+                        <i className={`${style.port} ${style.portLeftBottom}`} />
+                        <i className={`${style.port} ${style.portRightTop}`} />
+                        <i className={`${style.port} ${style.portRightBottom}`} />
+                        <span>PLEO2</span>
+                        <strong>Product<br />Engineering</strong>
+                    </div>
+
+                    {skills.map(group => {
+                        const active = group.group === activeGroup.group
+                        return (
+                            <button
+                                className={`${style.flowNode} ${style.categoryNode} ${style[nodePositionClasses[group.group]]} ${active ? style.categoryNodeActive : ''}`}
+                                type='button'
+                                onClick={() => selectGroup(group.group)}
+                                onMouseEnter={() => selectGroup(group.group)}
+                                data-capability-node
+                                data-capability-active={active || undefined}
+                                aria-pressed={active}
+                                key={group.group}
+                            >
+                                <i className={`${style.port} ${groupsMeta[group.group].side === 'left' ? style.portRight : style.portLeft}`} />
+                                <span>{group.group}</span>
+                                <small>{groupsMeta[group.group].description}</small>
+                                <em>{active ? 'Active' : 'Explore'}</em>
+                            </button>
+                        )
+                    })}
                 </div>
 
                 <div className={style.detail} data-map-detail aria-live='polite'>

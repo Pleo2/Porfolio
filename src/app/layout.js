@@ -1,5 +1,4 @@
 import './globals.css'
-import '@xyflow/react/dist/style.css'
 import Header from '@/components/Header/Header'
 import {JetBrains_Mono as JetBrainsMono} from 'next/font/google'
 import {CalSansUI} from '@calcom/cal-sans-ui/ui'
