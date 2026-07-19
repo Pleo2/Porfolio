@@ -25,7 +25,8 @@
 }
 
 .basePath,
-.signalPath {
+.signalPath,
+.skillPath {
   fill: none;
   vector-effect: non-scaling-stroke;
 }
@@ -41,6 +42,11 @@
 
 .signalPathActive { opacity: 1; }
 
+.skillPath {
+  stroke: rgba(197, 94, 88, .2);
+  stroke-width: 1;
+}
+
 .core,
 .mapNode {
   position: absolute;
@@ -48,6 +54,7 @@
 }
 
 .core {
+  z-index: 4;
   top: 50%;
   left: 50%;
   display: grid;
@@ -61,7 +68,6 @@
   box-shadow: 0 0 0 1.2rem rgba(197, 94, 88, .018), 0 0 4rem rgba(197, 94, 88, .08);
 }
 
-.core::before,
 .mapNode::before {
   position: absolute;
   top: 50%;
@@ -88,6 +94,7 @@
 }
 
 .mapNode {
+  z-index: 3;
   top: var(--node-y);
   left: var(--node-x);
   width: 10.5rem;
@@ -98,6 +105,7 @@
   background: rgba(12, 12, 15, .94);
   text-align: left;
   cursor: pointer;
+  opacity: .54;
   transition: color .25s ease, border-color .25s ease, background .25s ease;
 }
 
@@ -105,10 +113,35 @@
 .mapNode:nth-of-type(even)::before { right: auto; left: 0; transform: translate(-50%, -50%); }
 .mapNode:hover,
 .mapNode:focus-visible,
-.mapNodeActive { color: #dedee2; border-color: #6e4543; background: #111114; outline: none; }
+.mapNodeActive { color: #dedee2; border-color: #6e4543; background: #111114; opacity: 1; outline: none; }
 .mapNodeActive::before { opacity: 1; }
 .mapNode span { display: block; font: 500 .84rem/1 var(--font-sans); }
 .mapNode small { display: block; margin-top: .55rem; color: #66666f; font: 400 .5rem/1.35 var(--font-mono); letter-spacing: .035em; text-transform: uppercase; }
+
+.skillOrbit {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.skillNode {
+  position: absolute;
+  top: var(--skill-y);
+  left: var(--skill-x);
+  display: grid;
+  place-items: center;
+  width: 6.8rem;
+  min-height: 2.25rem;
+  padding: .35rem .45rem;
+  color: #96969f;
+  border: 1px solid #34343b;
+  background: rgba(12, 12, 15, .96);
+  font: 400 .56rem/1.2 var(--font-mono);
+  letter-spacing: .025em;
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
 
 .detail {
   display: none;
