@@ -18,7 +18,8 @@
   grid-area: 1 / 1;
   margin: 0;
   white-space: pre;
-  font: 700 clamp(.3rem, 1.35vw, .82rem)/1.12 monospace;
+  font: 700 clamp(.3rem, 1.35vw, .82rem)/1.12 var(--font-jetbrains-mono), monospace;
+  text-transform: uppercase;
   letter-spacing: 0;
 }
 

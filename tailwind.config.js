@@ -17,6 +17,7 @@ export const theme = {
     fontFamily: {
       sans: ['var(--font-inter)', ..._fontFamily.sans],
       display: ['var(--font-calSans)'],
+      mono: ['var(--font-jetbrains-mono)', ..._fontFamily.mono],
     },
     animation: {
       rotar: 'rotar 5s linear infinite',

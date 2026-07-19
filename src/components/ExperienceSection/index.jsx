@@ -8,9 +8,8 @@ export default function ExperienceSection({experience}) {
         <motion.section className='experience-section' initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.3}}>
             <Title section='Experience' />
             <div className='experience-list'>
-                {experience.map((item, index) => (
+                {experience.map(item => (
                     <article className='experience-item' key={`${item.company}-${item.period}`}>
-                        <span className='experience-index'>0{index + 1}</span>
                         <div className='experience-role'><h3>{item.company}</h3><p>{item.role}</p></div>
                         <time>{item.period}</time>
                         <div className='experience-copy'><p>{item.summary}</p><small>{item.detail}</small></div>

@@ -1,10 +1,11 @@
 import './globals.css'
 import Header from '@/components/Header/Header'
-import {Inter} from 'next/font/google'
+import {Inter, JetBrains_Mono as JetBrainsMono} from 'next/font/google'
 import localFont from 'next/font/local'
 import {SpeedInsights} from '@vercel/speed-insights/next'
 import Particles from '@/components/Particles'
 import Slider from '@/components/Slider'
+import SiteFooter from '@/components/SiteFooter'
 
 const inter = Inter({
     subsets: ['latin'],
@@ -15,6 +16,11 @@ const calSans = localFont({
     src: '../../public/CalSans-SemiBold.woff2',
     variable: '--font-calSans',
 })
+const jetBrainsMono = JetBrainsMono({
+    subsets: ['latin'],
+    variable: '--font-jetbrains-mono',
+    display: 'swap',
+})
 
 export const metadata = {
     title: 'José Moreno — Full-Stack Engineer & CTO',
@@ -23,7 +29,7 @@ export const metadata = {
 
 export default function RootLayout({children}) {
     return (
-        <html lang='en' className={`${calSans.variable} ${inter.variable}`}>
+        <html lang='en' className={`${calSans.variable} ${inter.variable} ${jetBrainsMono.variable}`}>
             <head>
                 <link rel='icon' href='/icon.svg' />
             </head>
@@ -36,6 +42,7 @@ export default function RootLayout({children}) {
                         {children}
                     </section>
                 </main>
+                <SiteFooter />
                 <SpeedInsights />
             </body>
         </html>
